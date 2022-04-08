@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="DotNetCore.Validation" Version="16.28.0" />
+        <PackageReference Include="Google.LibPhoneNumber" Version="1.0.0" />
+    </ItemGroup>
+</Project>

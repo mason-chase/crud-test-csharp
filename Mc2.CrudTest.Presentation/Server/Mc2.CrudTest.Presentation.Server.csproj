@@ -1,16 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.11" />
+    <Compile Remove="Startup.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared\Mc2.CrudTest.Shared.csproj" />
-    <ProjectReference Include="..\Front\Mc2.CrudTest.Presentation.Front.csproj" />
+    <PackageReference Include="DotNetCore.AspNetCore" Version="16.28.0" />
+    <PackageReference Include="DotNetCore.IoC" Version="16.28.0" />
+    <PackageReference Include="DotNetCore.Logging" Version="16.28.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Mc2.CrudTest.Application\Mc2.CrudTest.Application.csproj" />
+    <ProjectReference Include="..\..\Mc2.CrudTest.Model\Mc2.CrudTest.Model.csproj" />
   </ItemGroup>
 
 

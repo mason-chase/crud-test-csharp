@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="DotNetCore.Security" Version="16.28.0" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Mc2.CrudTest.Database\Mc2.CrudTest.Database.csproj" />
+    </ItemGroup>
+</Project>
