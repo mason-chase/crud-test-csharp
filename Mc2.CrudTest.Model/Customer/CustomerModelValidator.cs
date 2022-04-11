@@ -1,14 +1,13 @@
 using FluentValidation;
 using libphonenumber;
+using Mc2.CrudTest.Model.Customer;
 
 namespace Mc2.CrudTest.Model;
 
 public abstract class CustomerModelValidator : AbstractValidator<CustomerModel>
 {
-    private readonly PhoneNumber _phoneNumberValidator;
     public CustomerModelValidator()
     {
-        _phoneNumberValidator = new PhoneNumber();
     }
     public void Id() => RuleFor(customer => customer.Id).NotEmpty();
 
@@ -20,27 +19,7 @@ public abstract class CustomerModelValidator : AbstractValidator<CustomerModel>
 
     public void DateOfBirth() => RuleFor(customer => customer.DateOfBirth).NotEmpty();
 
-    public void PhoneNumber() => RuleFor(customer => customer.PhoneNumber).NotEmpty().Custom((phoneNumber, context) =>
-    {
-        bool result = false;
-
-        phoneNumber = phoneNumber.Trim();
-
-        if (phoneNumber.StartsWith("00"))
-            phoneNumber = "+" + phoneNumber.Remove(0, 2);
-
-        try
-        {
-            result = PhoneNumberUtil.Instance.Parse(phoneNumber, "").IsValidNumber;
-        }
-        catch
-        {
-            context.AddFailure("phone number is not in correct Format");
-            return;
-        }
-        if (!result)
-            context.AddFailure("phone number is not in correct Format");
-    });
+    public void PhoneNumber() => RuleFor(customer => customer.PhoneNumber).NotEmpty().PhoneNumber();
 
     public void BankAccountNumber() => RuleFor(customer => customer.BankAccountNumber).NotEmpty();
 

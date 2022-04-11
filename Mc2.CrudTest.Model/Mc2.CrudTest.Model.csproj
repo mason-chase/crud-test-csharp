@@ -6,4 +6,7 @@
         <PackageReference Include="DotNetCore.Validation" Version="16.28.0" />
         <PackageReference Include="Google.LibPhoneNumber" Version="1.0.0" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Customer\Phon\" />
+    </ItemGroup>
 </Project>
