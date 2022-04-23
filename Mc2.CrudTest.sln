@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Shared", "Mc2.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Presentation.Server", "Mc2.CrudTest.Presentation\Server\Mc2.CrudTest.Presentation.Server.csproj", "{8D41010B-AEF1-4742-B7EC-6A5AE62C45FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mc2.CrudTest.DataLayer", "Mc2.CrudTest.DataLayer\Mc2.CrudTest.DataLayer.csproj", "{6913E2B6-3E0B-42FC-835F-C3991262049B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{8D41010B-AEF1-4742-B7EC-6A5AE62C45FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D41010B-AEF1-4742-B7EC-6A5AE62C45FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D41010B-AEF1-4742-B7EC-6A5AE62C45FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6913E2B6-3E0B-42FC-835F-C3991262049B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6913E2B6-3E0B-42FC-835F-C3991262049B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6913E2B6-3E0B-42FC-835F-C3991262049B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6913E2B6-3E0B-42FC-835F-C3991262049B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
