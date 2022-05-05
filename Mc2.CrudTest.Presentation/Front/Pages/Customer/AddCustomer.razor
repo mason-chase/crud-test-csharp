@@ -1,0 +1,85 @@
+﻿@page "/AddCustomer"
+@inject HttpClient _http
+@inject NavigationManager _navigation
+@using Mc2.CrudTest.DataLayer.Entities
+@using Microsoft.EntityFrameworkCore
+@using Newtonsoft.Json
+@using System.Text.Json
+@inherits Customer
+
+<h3>Insert New Customer</h3>
+
+<div class="col-lg-6 col-md-6">
+
+
+    <div class="alert alert-danger">
+        <p>@text</p>
+    </div>
+
+
+    <EditForm Model="@_customer" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-floating mb-3">
+            <label class="form-label">First Name</label>
+            <input @bind="_customer.Firstname" type="text" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Last Name</label>
+            <input @bind="_customer.Lastname" type="text" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Date Of Birth</label>
+            <input @bind="_customer.DateOfBirth" type="date" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email Address</label>
+            <input @bind="_customer.Email" type="email" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Phone Number</label>
+            <input @bind="_customer.PhoneNumber"
+                   type="text"
+                   class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Bank Account Number</label>
+            <input @bind="_customer.BankAccountNumber" type="number" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            <span class="oi oi-plus mx-2" aria-hidden="true"></span>
+            Insert
+        </button>
+    </EditForm>
+</div>
+
+<p class="my-4">@(JsonConvert.SerializeObject(_customer))</p>
+
+@code {
+    private DataLayer.Entities.Customer _customer = new();
+    private string text = "";
+
+    private async Task HandleValidSubmit()
+    {
+        var obj = JsonConvert.SerializeObject(_customer);
+
+        //var phoneNumber = _customer.PhoneNumber;
+        //phoneNumber = $"{phoneNumber.Take(3)}-" +
+        //              $"{phoneNumber.Skip(3).Take(3)} " +
+        //              $"{phoneNumber.Skip(6).Take(3)} " +
+        //              $"{phoneNumber.Skip(9).Take(4)}";
+        //// +98 914 028 6863
+        //response = phoneNumber;
+        //_customer.PhoneNumber = phoneNumber;
+
+        var response = await _http.PostAsJsonAsync("api/customer", obj);
+        text = await response.Content.ReadFromJsonAsync<string>();
+        if (response.IsSuccessStatusCode)
+        {
+            _navigation.NavigateTo("/customer");
+        }
+
+    }
+}

@@ -1,5 +1,9 @@
+using Mc2.CrudTest.DataLayer.Context;
+using Mc2.CrudTest.DataLayer.Repositories;
+using Mc2.CrudTest.DataLayer.Servicies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,6 +26,21 @@ namespace Mc2.CrudTest.Presentation.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            #region Db Context
+
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("Mc2.CrudTest.Connection"));
+            });
+
+            #endregion
+
+            #region Servicies
+
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

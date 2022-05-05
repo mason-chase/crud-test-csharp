@@ -1,0 +1,57 @@
+﻿@page "/customer"
+@using Mc2.CrudTest.DataLayer.Entities
+@inject HttpClient _http
+
+<h3>Customer</h3>
+
+<a href="AddCustomer" class="btn btn-success my-3">
+    <span class="oi oi-plus mx-2" aria-hidden="true"></span>
+    Insert Customer
+</a>
+
+@if (_customers == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>DateOfBirth</th>
+                <th>PhoneNumber</th>
+                <th>Email</th>
+                <th>BankAccountNumber</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (DataLayer.Entities.Customer customer in _customers)
+            {
+                <tr>
+                    <td>@customer.Firstname</td>
+                    <td>@customer.Lastname</td>
+                    <td>@customer.DateOfBirth</td>
+                    <td>@customer.PhoneNumber</td>
+                    <td>@customer.Email</td>
+                    <td>@customer.BankAccountNumber</td>
+                    <td>
+                        <a href="DeleteCustomer/@customer.Email" class="btn btn-sm btn-danger">Delete</a>
+                        <a href="EditCustomer/@customer.Email" class="btn btn-sm btn-warning">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private DataLayer.Entities.Customer[] _customers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _customers = await _http.GetFromJsonAsync<DataLayer.Entities.Customer[]>("api/Customer");
+    }
+}

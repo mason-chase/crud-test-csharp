@@ -1,0 +1,75 @@
+﻿@page "/EditCustomer/{email}"
+@inject HttpClient _http
+@inject NavigationManager _navigation
+@using Mc2.CrudTest.DataLayer.Entities
+@using Microsoft.EntityFrameworkCore
+@using Newtonsoft.Json
+@using System.Text.Json
+@inherits Customer
+
+<h3>Edit Customer</h3>
+
+<div class="col-lg-6 col-md-6">
+
+    <EditForm Model="@_customer" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-floating mb-3">
+            <label class="form-label">First Name</label>
+            <input @bind="_customer.Firstname" type="text" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Last Name</label>
+            <input @bind="_customer.Lastname" type="text" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Date Of Birth</label>
+            <input @bind="_customer.DateOfBirth" type="date" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email Address</label>
+            <input @bind="_customer.Email" type="email" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Phone Number</label>
+            <input @bind="_customer.PhoneNumber"
+                   type="text"
+                   class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Bank Account Number</label>
+            <input @bind="_customer.BankAccountNumber" type="number" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-warning">
+            <span class="oi oi-reload mx-2" aria-hidden="true"></span>
+            Edit
+        </button>
+    </EditForm>
+</div>
+
+<p class="my-4">@(JsonConvert.SerializeObject(_customer))</p>
+
+@code {
+
+    [Parameter]
+    public string email { get; set; }
+    private DataLayer.Entities.Customer _customer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await _http.GetStringAsync($"/api/Customer/{email}");
+        _customer = JsonConvert.DeserializeObject<DataLayer.Entities.Customer>(response);
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        var obj = JsonConvert.SerializeObject(_customer);
+        var response = await _http.PutAsJsonAsync("api/customer", new StringContent(obj));
+        if (response.IsSuccessStatusCode)
+        {
+            _navigation.NavigateTo("/customer");
+        }
+    }
+}

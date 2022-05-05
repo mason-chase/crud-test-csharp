@@ -1,0 +1,68 @@
+﻿@page "/DeleteCustomer/{email}"
+@using Mc2.CrudTest.DataLayer.Entities
+@using Newtonsoft.Json
+@inject HttpClient _http
+@inject NavigationManager _navigation
+
+<h2>Delete Customer</h2>
+<h3>
+    Are you sure delete this user?
+</h3>
+
+@if (_customer == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>DateOfBirth</th>
+                <th>PhoneNumber</th>
+                <th>Email</th>
+                <th>BankAccountNumber</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@_customer.Firstname</td>
+                <td>@_customer.Lastname</td>
+                <td>@_customer.DateOfBirth</td>
+                <td>@_customer.PhoneNumber</td>
+                <td>@_customer.Email</td>
+                <td>@_customer.BankAccountNumber</td>
+            </tr>
+        </tbody>
+    </table>
+    <button @onclick="Delete" class="btn btn-danger my-4">
+        Delete
+        <span class="oi oi-delete mx-2" aria-hidden="true"></span>
+    </button>
+}
+
+@code {
+    [Parameter]
+    public string email { get; set; }
+
+    private DataLayer.Entities.Customer _customer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await _http.GetStringAsync($"/api/Customer/{email}");
+        _customer = JsonConvert.DeserializeObject<DataLayer.Entities.Customer>(response);
+    }
+
+    private async Task Delete()
+    {
+        var response = await _http.DeleteAsync($"api/Customer/{email}");
+        if (response.IsSuccessStatusCode)
+        {
+            _navigation.NavigateTo("/customer");
+        }
+    }
+
+}
