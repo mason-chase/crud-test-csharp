@@ -12,7 +12,7 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private readonly ILogger<WeatherForecastController> _logger;
+        /*private readonly ILogger<WeatherForecastController> _logger;
 
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
@@ -26,6 +26,6 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
             IPAddress userIp = HttpContext.Request.HttpContext.Connection.RemoteIpAddress;
             _logger.LogDebug($"[Request from {userIp}: Serving Get() response: {string.Join("\n", response.ToList())}");
             return response;
-        }
+        }*/
     }
 }
