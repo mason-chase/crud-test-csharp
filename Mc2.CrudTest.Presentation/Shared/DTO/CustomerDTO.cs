@@ -1,16 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
-namespace Mc2.CrudTest.Presentation.Server.Models
+namespace Mc2.CrudTest.Domain.DTO
 {
-    public class Customer
+    public class CustomerDTO
     {
-        [Key]
-        [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
         [Required]
         [EmailAddress(ErrorMessage = "Entered Email is not Valid!")]
         public string Email { get; set; }

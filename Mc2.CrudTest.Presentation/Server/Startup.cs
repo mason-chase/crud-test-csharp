@@ -1,5 +1,8 @@
 using System;
+using Mc2.CrudTest.Domain.Repositories;
 using Mc2.CrudTest.Presentation.Server.Context;
+using Mc2.CrudTest.Presentation.Server.Models;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +30,8 @@ namespace Mc2.CrudTest.Presentation.Server
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddMediatR(typeof(Startup).Assembly);
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo

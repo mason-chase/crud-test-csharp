@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mc2.CrudTest.Shared.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220507131053_InitialCommit")]
+    [Migration("20220507185544_InitialCommit")]
     partial class InitialCommit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,25 +23,27 @@ namespace Mc2.CrudTest.Shared.Migrations
 
             modelBuilder.Entity("Mc2.CrudTest.Presentation.Server.Models.Customer", b =>
                 {
-                    b.Property<string>("Firstname")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Lastname")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("BankAccountNumber")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasMaxLength(17)
+                        .HasColumnType("nvarchar(17)");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Firstname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Lastname")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -49,9 +51,18 @@ namespace Mc2.CrudTest.Shared.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.HasKey("Firstname", "Lastname", "DateOfBirth", "Id");
+                    b.HasKey("Id");
+
+                    b.HasIndex("DateOfBirth")
+                        .IsUnique();
 
                     b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Firstname")
+                        .IsUnique();
+
+                    b.HasIndex("Lastname")
                         .IsUnique();
 
                     b.ToTable("Customers");
