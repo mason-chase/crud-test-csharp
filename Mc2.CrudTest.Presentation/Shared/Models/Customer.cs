@@ -22,7 +22,7 @@ namespace Mc2.CrudTest.Presentation.Server.Models
         public DateTime DateOfBirth { get; set; }
         [Phone(ErrorMessage = "Entered Phone Number is not Valid!")]
         [MaxLength(15)]
-        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Mobile Number Format Is Invalid!")]
+        /*[RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Mobile Number Format Is Invalid!")]*/
         public string PhoneNumber { get; set; }
         [MaxLength(17)]
         public string BankAccountNumber { get; set; }

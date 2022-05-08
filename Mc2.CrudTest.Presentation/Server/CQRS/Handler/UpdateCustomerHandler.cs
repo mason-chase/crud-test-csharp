@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Mc2.CrudTest.Domain.Repositories;
 using Mc2.CrudTest.Presentation.Server.CQRS.Commands;
-using Mc2.CrudTest.Presentation.Server.Models;
+using Mc2.CrudTest.Shared.Common;
 using MediatR;
 
 namespace Mc2.CrudTest.Presentation.Server.Queries
@@ -19,6 +19,13 @@ namespace Mc2.CrudTest.Presentation.Server.Queries
         {
             try
             {
+                if (!request.customer.Email.IsValidEmailAddress())
+                    throw new NotValidEmail();
+                if (!request.customer.PhoneNumber.IsPhoneNumber())
+                    throw new NotValidNumber();
+                if (!request.customer.BankAccountNumber.IsValidBankAccount())
+                    throw new NotValidBankAccountNumber();
+                
                 _repository.Update(request.customer);
                 await _repository.SaveChanges();
                 return true;

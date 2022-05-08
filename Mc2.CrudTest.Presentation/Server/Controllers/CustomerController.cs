@@ -53,7 +53,21 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
             try
             {
                 Customer customer = await _mediatr.Send(new AddCustomerCommand(dto));
-                return customer != null ? Ok(customer): BadRequest(new { Message = "First Name , Email or BirthDate Should be Unique"});
+                return customer != null
+                    ? Ok(customer)
+                    : BadRequest(new {Message = "First Name , Email or BirthDate Should be Unique"});
+            }
+            catch (NotValidBankAccountNumber)
+            {
+                return BadRequest(new {ErrorMessage = "Bank Account Number Is Not Valid!"});
+            }
+            catch (NotValidEmail)
+            {
+                return BadRequest(new {ErrorMessage = "Email Is Not Valid!"});
+            }
+            catch (NotValidNumber)
+            {
+                return BadRequest(new {ErrorMessage = "Phone Number Is Not Valid!"});
             }
             catch (Exception)
             {
@@ -67,7 +81,21 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
             try
             {
                 bool result = await _mediatr.Send(new UpdateCustomerCommand(customer));
-                return result ? Ok("Success"): BadRequest(new { Message = "First Name , Email or BirthDate Should be Unique"});
+                return result
+                    ? Ok("Success")
+                    : BadRequest(new {Message = "First Name , Email or BirthDate Should be Unique"});
+            }
+            catch (NotValidBankAccountNumber)
+            {
+                return BadRequest(new {ErrorMessage = "Bank Account Number Is Not Valid!"});
+            }
+            catch (NotValidEmail)
+            {
+                return BadRequest(new {ErrorMessage = "Email Is Not Valid!"});
+            }
+            catch (NotValidNumber)
+            {
+                return BadRequest(new {ErrorMessage = "Phone Number Is Not Valid!"});
             }
             catch (Exception)
             {
