@@ -21,8 +21,8 @@ namespace Mc2.CrudTest.Presentation.Server.Queries
             {
                 if (!request.customer.Email.IsValidEmailAddress())
                     throw new NotValidEmail();
-                if (!request.customer.PhoneNumber.IsPhoneNumber())
-                    throw new NotValidNumber();
+                if (!request.customer.PhoneNumber.PhoneIsValid())
+                    throw new NotValidEmail();
                 if (!request.customer.BankAccountNumber.IsValidBankAccount())
                     throw new NotValidBankAccountNumber();
                 

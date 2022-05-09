@@ -65,10 +65,6 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
             {
                 return BadRequest(new {ErrorMessage = "Email Is Not Valid!"});
             }
-            catch (NotValidNumber)
-            {
-                return BadRequest(new {ErrorMessage = "Phone Number Is Not Valid!"});
-            }
             catch (Exception)
             {
                 return BadRequest("Internal Server Error");
@@ -92,10 +88,6 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
             catch (NotValidEmail)
             {
                 return BadRequest(new {ErrorMessage = "Email Is Not Valid!"});
-            }
-            catch (NotValidNumber)
-            {
-                return BadRequest(new {ErrorMessage = "Phone Number Is Not Valid!"});
             }
             catch (Exception)
             {

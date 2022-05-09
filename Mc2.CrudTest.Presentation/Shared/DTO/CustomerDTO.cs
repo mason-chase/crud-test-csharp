@@ -14,10 +14,10 @@ namespace Mc2.CrudTest.Domain.DTO
         public string Lastname { get; set; }
         [Required]
         public DateTime DateOfBirth { get; set; }
-        [Phone(ErrorMessage = "Entered Phone Number is not Valid!")]
         [MaxLength(15)]
+        [Phone(ErrorMessage = "Entered Phone Number is not Valid!")]
         public string PhoneNumber { get; set; }
-        [MaxLength(17)]
+        [MaxLength(25)]
         public string BankAccountNumber { get; set; }
     }
 }

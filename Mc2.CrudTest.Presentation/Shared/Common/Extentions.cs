@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using PhoneNumbers;
 
 namespace Mc2.CrudTest.Shared.Common
 {
@@ -15,14 +16,28 @@ namespace Mc2.CrudTest.Shared.Common
             return regex.IsMatch(email);
         }
         /// <summary>
-        ///  TODO
-        ///  Phone Number Validator 
+        ///  Validate Phone Number
         /// </summary>
-        /// <param name="number"> string of Phone Number </param>
+        /// <param name="phoneNumber"></param>
         /// <returns></returns>
-        public static bool IsPhoneNumber(this string number)
+        public static bool PhoneIsValid(this string phoneNumber)
         {
-            return Regex.Match(number, @"^(\+[0-9]{9})$").Success;
+            
+            PhoneNumberUtil phoneUtil = PhoneNumberUtil.GetInstance();
+            try
+            {
+                PhoneNumber numberProto = phoneUtil.Parse(phoneNumber, "US");
+                var validate = phoneUtil.IsValidNumber(numberProto);
+                if (!validate)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (NumberParseException e)
+            {
+                return false;
+            }
         }
         /// <summary>
         ///  Validate Bank Account

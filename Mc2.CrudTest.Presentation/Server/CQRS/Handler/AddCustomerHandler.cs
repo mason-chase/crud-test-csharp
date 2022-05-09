@@ -13,11 +13,9 @@ namespace Mc2.CrudTest.Presentation.Server.Queries
     public class AddCustomerHandler: IRequestHandler<AddCustomerCommand, Customer>
     {
         private readonly ICustomerRepository _repository;
-        private static PhoneNumberUtil _phoneUtil;
         public AddCustomerHandler(ICustomerRepository repository)
         {
             _repository = repository;
-            _phoneUtil = PhoneNumberUtil.GetInstance();
         }
         public async Task<Customer> Handle(AddCustomerCommand request, CancellationToken cancellationToken)
         {
@@ -32,10 +30,8 @@ namespace Mc2.CrudTest.Presentation.Server.Queries
             };
             if (!customerModel.Email.IsValidEmailAddress())
                 throw new NotValidEmail();
-            // international Numbers 
-            // Test Needed TODO
-            if (!customerModel.PhoneNumber.IsPhoneNumber())
-                throw new NotValidNumber();
+            if (!customerModel.PhoneNumber.PhoneIsValid())
+                throw new NotValidEmail();
             if (!customerModel.BankAccountNumber.IsValidBankAccount())
                 throw new NotValidBankAccountNumber();
                 
@@ -52,7 +48,6 @@ namespace Mc2.CrudTest.Presentation.Server.Queries
             return customerModel;
         }
     }
-    public class NotValidNumber: Exception {}
     public class NotValidEmail: Exception {}
     public class NotValidBankAccountNumber : Exception {}
 }

@@ -24,7 +24,7 @@ namespace Mc2.CrudTest.Presentation.Server.Models
         [MaxLength(15)]
         /*[RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Mobile Number Format Is Invalid!")]*/
         public string PhoneNumber { get; set; }
-        [MaxLength(17)]
+        [MaxLength(25)]
         public string BankAccountNumber { get; set; }
     }
 }
