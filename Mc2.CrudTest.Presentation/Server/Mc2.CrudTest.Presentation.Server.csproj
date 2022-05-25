@@ -6,9 +6,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Mc2.CrudTest.AcceptanceTests\Mc2.CrudTest.AcceptanceTests.csproj" />
+    <ProjectReference Include="..\..\Mc2.CrudTest.Application\Mc2.CrudTest.Application.csproj" />
     <ProjectReference Include="..\Shared\Mc2.CrudTest.Shared.csproj" />
     <ProjectReference Include="..\Front\Mc2.CrudTest.Presentation.Front.csproj" />
   </ItemGroup>

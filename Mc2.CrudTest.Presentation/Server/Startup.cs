@@ -1,5 +1,9 @@
+using Mc2.CrudTest.Common;
+using Mc2.CrudTest.Context;
+using Mc2.CrudTest.Customers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -19,6 +23,19 @@ namespace Mc2.CrudTest.Presentation.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<MC2Context>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("FHTConnection"),
+                    b => b.MigrationsAssembly("FHT.Data"))
+                ,
+                ServiceLifetime.Transient,
+                ServiceLifetime.Transient
+                );
+
+            services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<ICustomerService, CustomerService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
