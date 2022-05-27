@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Mc2.CrudTest.Dtos;
+using System;
 
 namespace Mc2.CrudTest.Customers.Dtos
 {
-    public class CustomerDto
+    public class UpsertCustomerInput
     {
         public int Id { get; set; }
         public string Firstname { get; set; }

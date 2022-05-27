@@ -67,7 +67,7 @@ namespace Mc2.CrudTest.Common
             return _context.Set<T>().Where(expression).Any();
         }
 
-        public async Task<T> GetByIdAsync(Guid id)
+        public async Task<T> GetByIdAsync(int id)
         {
             return await _context.Set<T>().FindAsync(id);
         }
