@@ -22,13 +22,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Drivers\" />
-		<Folder Include="Features\" />
-		<Folder Include="Support\" />
+		<ProjectReference Include="..\Mc2.CrudTest.Presentation\Server\Mc2.CrudTest.Presentation.Server.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Mc2.CrudTest.Presentation\Server\Mc2.CrudTest.Presentation.Server.csproj" />
+	  <Folder Include="Drivers\" />
+	  <Folder Include="Support\" />
 	</ItemGroup>
 
 </Project>
