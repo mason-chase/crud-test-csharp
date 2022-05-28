@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Dapper.Contrib.Extensions;
+using FluentValidation;
 using Mc2.CrudTest.Bootstrapper.Modules;
 using Mc2.CrudTest.Data.EF.DatabaseContext;
 using Mc2.CrudTest.Data.EF.Repositories.Concretes;
@@ -66,8 +67,10 @@ public static class AllExtensions
 
     public static IServiceCollection AddFluentValidation(this IServiceCollection services)
     {
+        //services.AddScoped<IValidator<CreateCustomerDTO>>(x => 
+        //    new CreateCustomerDTOValidator(x.GetRequiredService<ICustomerService>()));
 
-        return services;
+        return services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
     }
 
     public static IServiceCollection AddSwagger(this IServiceCollection services) =>
