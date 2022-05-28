@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  mc2.crudtest.presentation.server:
+    image: ${DOCKER_REGISTRY-}mc2crudtestpresentationserver
+    build:
+      context: .
+      dockerfile: Mc2.CrudTest.Presentation/Server/Dockerfile

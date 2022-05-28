@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="libphonenumber-csharp" Version="8.12.48" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Mc2.CrudTest.Data\Mc2.CrudTest.Data.csproj" />
+	</ItemGroup>
+
+</Project>
