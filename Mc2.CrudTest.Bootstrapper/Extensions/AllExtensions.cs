@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 
 namespace Mc2.CrudTest.Bootstrapper.Extensions;
 
@@ -54,7 +55,8 @@ public static class AllExtensions
         return services.AddScoped(typeof(IEFRepository<>), typeof(EFRepository<>));
     }
 
-    public static IServiceCollection AddAutoMapper(this IServiceCollection services) => services;
+    public static IServiceCollection AddAutoMapper(this IServiceCollection services) =>
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
     public static IServiceCollection AddMediatR(this IServiceCollection services)
     {
