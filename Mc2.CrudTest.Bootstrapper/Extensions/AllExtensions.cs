@@ -41,6 +41,12 @@ public static class AllExtensions
         return services;
     }
 
+    public static IServiceCollection AddSwagger(this IServiceCollection services) =>
+        services.AddEndpointsApiExplorer().AddSwaggerGen();
+
+    public static IApplicationBuilder UseSwagger(this IApplicationBuilder app) =>
+        app.UseSwagger().UseSwaggerUI();
+
     public static IApplicationBuilder IntializeDatabase(this IApplicationBuilder app)
     {
         using var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();

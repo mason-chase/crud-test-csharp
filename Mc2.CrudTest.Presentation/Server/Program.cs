@@ -1,5 +1,4 @@
-﻿
-using Mc2.CrudTest.Bootstrapper.Startup;
+﻿using Mc2.CrudTest.Bootstrapper.Startup;
 
 var builder = WebApplication.CreateBuilder(args);
 

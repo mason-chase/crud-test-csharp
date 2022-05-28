@@ -16,6 +16,7 @@ public static class AllRegisterForStartup
 
         return services
             .AddPersistence(configuration)
+            .AddSwagger()
             .AddAutoMapper()
             .AddMediatR()
             .AddFluentValidation()
@@ -25,7 +26,10 @@ public static class AllRegisterForStartup
 
     public static IApplicationBuilder UseConfigure(this IApplicationBuilder app, IHostEnvironment env, IConfiguration configuration)
     {
-        app.IntializeDatabase();
+        app
+            .IntializeDatabase()
+            .UseSwagger()
+        ;
 
         return app;
     }
