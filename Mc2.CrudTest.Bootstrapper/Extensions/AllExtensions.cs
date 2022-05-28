@@ -7,6 +7,7 @@ using Mc2.CrudTest.Data.EF.DatabaseContext;
 using Mc2.CrudTest.Data.EF.Repositories.Concretes;
 using Mc2.CrudTest.Data.EF.Repositories.Interfaces;
 using Mc2.CrudTest.Data.Shared.Extensions;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -61,8 +62,16 @@ public static class AllExtensions
 
     public static IServiceCollection AddMediatR(this IServiceCollection services)
     {
+        //services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+        //services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
+        //services.AddScoped(typeof(IPipelineBehavior<,>), typeof(EventLoggerBehavior<,>));
 
-        return services;
+        //services.AddSingleton<IEventStoreDbContext, EventStoreDbContext>();
+
+        //services.AddTransient(typeof(IRequestPreProcessor<,>), typeof(CustomerRequestedPreDispatcher<,>));
+        //services.AddTransient(typeof(IRequestPostProcessor<,>), typeof(CustomerRequestedPostDispatcher<,>));
+
+        return services.AddMediatR(Assembly.GetExecutingAssembly());
     }
 
     public static IServiceCollection AddFluentValidation(this IServiceCollection services)
