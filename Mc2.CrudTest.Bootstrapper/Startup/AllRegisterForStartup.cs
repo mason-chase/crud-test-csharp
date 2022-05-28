@@ -28,7 +28,7 @@ public static class AllRegisterForStartup
     {
         app
             .IntializeDatabase()
-            .UseSwagger()
+            .UseMySwagger(env)
         ;
 
         return app;

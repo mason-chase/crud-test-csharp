@@ -85,8 +85,12 @@ public static class AllExtensions
     public static IServiceCollection AddSwagger(this IServiceCollection services) =>
         services.AddEndpointsApiExplorer().AddSwaggerGen();
 
-    public static IApplicationBuilder UseSwagger(this IApplicationBuilder app) =>
-        app.UseSwagger().UseSwaggerUI();
+    public static IApplicationBuilder UseMySwagger(this IApplicationBuilder app, IHostEnvironment env)
+    {
+        if (env.IsDevelopment())  app.UseSwagger().UseSwaggerUI();
+
+        return app;
+    }
 
     public static IApplicationBuilder IntializeDatabase(this IApplicationBuilder app)
     {
