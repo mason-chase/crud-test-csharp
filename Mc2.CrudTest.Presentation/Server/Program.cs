@@ -30,4 +30,8 @@ app.MapControllers();
 app.MapRazorPages();
 app.MapFallbackToFile("index.html");
 
+//using var scope = app.Services.CreateScope();
+//var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+//if (db.Database.GetPendingMigrations().Any()) await db.Database.MigrateAsync();
+
 await app.RunAsync();

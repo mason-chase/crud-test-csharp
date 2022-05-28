@@ -1,4 +1,20 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Dapper.Contrib.Extensions;
+using FluentValidation;
+using Mc2.CrudTest.Bootstrapper.Modules;
+using Mc2.CrudTest.Data.EF.DatabaseContext;
+using Mc2.CrudTest.Data.EF.Repositories.Concretes;
+using Mc2.CrudTest.Data.EF.Repositories.Interfaces;
+using Mc2.CrudTest.Data.Shared.Extensions;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System.Reflection;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,20 +27,36 @@ public static class AllExtensions
 
     public static void AddTableNameMapper(this IServiceCollection _)
     {
+        SqlMapperExtensions.TableNameMapper = entityType =>
+        {
+            var getNames = TableMappingName.GetNames();
 
+            var getTable = getNames.FirstOrDefault(_ => _.Name.Equals(entityType.Name, StringComparison.CurrentCulture));
+
+            if (getTable is null) throw new Exception($"Not supported entity type {entityType} .. !!!!");
+
+            var result = $"{getTable.SchemaName}.{getTable.PluralName}";
+
+            return result;
+        };
     }
 
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
         var cnn = configuration.GetConnectionString("DefaultConnection");
 
-        return services;
+        return services
+            .AddDbContextPool<AppDbContext>(_ =>
+                _.UseInMemoryDatabase(cnn)
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+            )
+        ;
     }
 
     public static IServiceCollection AddDIContainerBuilder(this IServiceCollection services, IHostBuilder hostBuilder)
     {
 
-        return services;
+        return services.AddScoped(typeof(IEFRepository<>), typeof(EFRepository<>));
     }
 
     public static IServiceCollection AddAutoMapper(this IServiceCollection services) => services;
@@ -50,6 +82,13 @@ public static class AllExtensions
     public static IApplicationBuilder IntializeDatabase(this IApplicationBuilder app)
     {
         using var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+
+        var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+        dbContext.Database.EnsureCreated();
+
+        //var dataInitializer = scope.ServiceProvider.GetRequiredService<IDataInitializer>();
+        //dataInitializer.InitializeDataAsync().GetAwaiter().GetResult();
 
         return app;
     }
