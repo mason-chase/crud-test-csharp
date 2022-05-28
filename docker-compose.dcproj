@@ -9,10 +9,11 @@
     <DockerServiceName>mc2.crudtest.presentation.server</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
+    <None Include=".dockerignore" />
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>
     </None>
     <None Include="docker-compose.yml" />
-    <None Include=".dockerignore" />
+    <None Include="enterpoint.sh" />
   </ItemGroup>
 </Project>
