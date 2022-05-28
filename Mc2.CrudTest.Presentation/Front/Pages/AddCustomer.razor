@@ -1,0 +1,105 @@
+﻿@page "/customers/add"
+
+@inject HttpClient _http
+@inject NavigationManager NavigationManager
+
+<h3>Add Customer</h3>
+
+<EditForm Model="customer" OnValidSubmit="SaveCustomer">
+	@*<FluentValidationValidator DisableAssemblyScanning="@true" />*@
+	@*<FluentValidationValidator @ref="_fluentValidationValidator" />*@
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+	<div class="mb-3">
+		<label for="FirstName" class="form-label">FirstName</label>
+		<div class="col-md-4">
+			<InputText class="form-control" @bind-Value="customer.FirstName" />
+		</div>
+        <ValidationMessage For="@(() => customer.FirstName)" />
+	</div>
+	<div class="mb-3">
+		<label for="LastName" class="form-label">LastName</label>
+		<div class="col-md-4">
+			<InputText class="form-control" @bind-Value="customer.LastName" />
+		</div>
+		<ValidationMessage For="@(() => customer.LastName)" />
+	</div>
+	<div class="mb-3">
+		<label for="DateOfBirth" class="form-label">DateOfBirth</label>
+		<div class="col-md-4">
+			<InputDate class="form-control" @bind-Value="customer.DateOfBirth" />
+		</div>
+		<ValidationMessage For="@(() => customer.DateOfBirth)" />
+	</div>
+	<div class="mb-3">
+		<label for="PhoneNumber" class="form-label">PhoneNumber</label>
+		<div class="col-md-4">
+			<InputText class="form-control" @bind-Value="customer.PhoneNumber" />
+		</div>
+		<ValidationMessage For="@(() => customer.PhoneNumber)" />
+	</div>
+	<div class="mb-3">
+		<label for="CountryCodeSelected" class="form-label">CountryCodeSelected</label>
+		<div class="col-md-4">
+			<InputText class="form-control" @bind-Value="customer.CountryCodeSelected" />
+		</div>
+		<ValidationMessage For="@(() => customer.CountryCodeSelected)" />
+	</div>
+	<div class="mb-3">
+		<label for="Email" class="form-label">Email</label>
+		<div class="col-md-4">
+			<InputText class="form-control" @bind-Value="customer.Email" />
+		</div>
+		<ValidationMessage For="@(() => customer.Email)" />
+	</div>
+	<div class="mb-3">
+		<label for="Email" class="form-label">BankAccountNumber</label>
+		<div class="col-md-4">
+			<InputText class="form-control" @bind-Value="customer.BankAccountNumber" />
+		</div>
+		<ValidationMessage For="@(() => customer.BankAccountNumber)" />
+	</div>
+	<div class="form-group">
+		<button type="submit" class="btn btn-primary">Save</button>
+		<button class="btn btn-light" @onclick="Cancel">Cancel</button>
+	</div>
+</EditForm>
+
+<br />
+
+<button @onclick="PartialValidate">Partial Validation</button>
+
+@code {
+
+	//private FluentValidationValidator? _fluentValidationValidator;
+
+	//CreateCustomerDTO Customer { get; set; } = new();
+
+	protected CreateCustomerDTO customer = new();
+
+	void SubmitValidForm()
+	{
+		Console.WriteLine("Form Submitted Successfully!");
+	}
+
+	protected async Task SaveCustomer()
+	{
+		SubmitValidForm();
+
+		var httpResponse = await _http.PostAsJsonAsync("/customers/create", customer);
+		
+		//var data = await httpResponse.Content.ReadFromJsonAsync<Guid>();
+
+		if(httpResponse.IsSuccessStatusCode) Cancel();
+	}
+
+	public void Cancel()
+	{
+		NavigationManager.NavigateTo("/customers");
+	}
+
+	void PartialValidate()
+	{
+		//Console.WriteLine($"Partial validation result : {_fluentValidationValidator?.Validate(options => options.IncludeRuleSets("PhoneNumber"))}");
+	}
+}

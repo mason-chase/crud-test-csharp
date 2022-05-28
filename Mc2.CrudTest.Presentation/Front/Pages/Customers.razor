@@ -1,0 +1,51 @@
+﻿@page "/customers"
+
+@inject HttpClient _http
+
+<h3>Customers</h3>
+
+@if (_customers is null)
+{
+	<p><em>Loading...</em></p>
+}
+else
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>FirstName</th>
+				<th>LastName</th>
+				<th>DateOfBirth</th>
+				<th>PhoneNumber</th>
+				<th>CountryCodeSelected</th>
+				<th>Email</th>
+				<th>BankAccountNumber</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (CustomerDTO customer in _customers)
+			{
+				<tr>
+					<td>@customer.Id</td>
+					<td>@customer.FirstName</td>
+					<td>@customer.LastName</td>
+					<td>@customer.DateOfBirth</td>
+					<td>@customer.PhoneNumber</td>
+					<td>@customer.CountryCodeSelected</td>
+					<td>@customer.Email</td>
+					<td>@customer.BankAccountNumber</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@code {
+	private CustomerDTO[] _customers;
+
+	protected override async Task OnInitializedAsync()
+	{
+		_customers = await _http.GetFromJsonAsync<CustomerDTO[]>("/customers/getall");
+	}
+}
