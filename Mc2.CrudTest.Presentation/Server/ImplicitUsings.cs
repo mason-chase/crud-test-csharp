@@ -1,4 +1,7 @@
-﻿global using Mc2.CrudTest.Bootstrapper.Startup;
+﻿global using Mc2.CrudTest.Bootstrapper.Exceptions;
+global using Mc2.CrudTest.Bootstrapper.Handlers.Commands;
+global using Mc2.CrudTest.Bootstrapper.Handlers.Queries;
+global using Mc2.CrudTest.Bootstrapper.Startup;
 global using Mc2.CrudTest.Domain;
 global using Mc2.CrudTest.Domain.DTO;
 global using Mc2.CrudTest.Domain.Generators;
