@@ -1,20 +1,13 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Dapper.Contrib.Extensions;
-using FluentValidation;
 using Mc2.CrudTest.Bootstrapper.Modules;
 using Mc2.CrudTest.Data.EF.DatabaseContext;
 using Mc2.CrudTest.Data.EF.Repositories.Concretes;
 using Mc2.CrudTest.Data.EF.Repositories.Interfaces;
 using Mc2.CrudTest.Data.Shared.Extensions;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System.Reflection;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,7 +16,8 @@ namespace Mc2.CrudTest.Bootstrapper.Extensions;
 
 public static class AllExtensions
 {
-    public static void InitAutofac(this IHostBuilder hostBuilder) { }
+    public static void InitAutofac(this IHostBuilder hostBuilder) =>
+        hostBuilder.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
     public static void AddTableNameMapper(this IServiceCollection _)
     {
@@ -55,6 +49,7 @@ public static class AllExtensions
 
     public static IServiceCollection AddDIContainerBuilder(this IServiceCollection services, IHostBuilder hostBuilder)
     {
+        hostBuilder.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new MyApplicationModule()));
 
         return services.AddScoped(typeof(IEFRepository<>), typeof(EFRepository<>));
     }
