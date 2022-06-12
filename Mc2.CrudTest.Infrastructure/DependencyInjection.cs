@@ -17,6 +17,7 @@ namespace Mc2.CrudTest.Infrastructure
             IConfiguration configuration)
         {
             services.AddDbContext<CustomerDbContext>(options =>
+                //options.UseSqlServer(configuration.GetConnectionString("DbConnectionDocker"),
                 options.UseSqlServer(configuration.GetConnectionString("DbConnection"),
                 b => b.MigrationsAssembly(typeof(CustomerDbContext).Assembly.FullName)), ServiceLifetime.Transient);
 

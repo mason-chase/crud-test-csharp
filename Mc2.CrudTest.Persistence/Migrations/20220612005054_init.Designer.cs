@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mc2.CrudTest.Persistence.Migrations
 {
     [DbContext(typeof(CustomerDbContext))]
-    [Migration("20220611224418_DB Initialize")]
-    partial class DBInitialize
+    [Migration("20220612005054_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
