@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Mc2.CrudTest.AcceptanceTests.Validators
+namespace Mc2.CrudTest.AcceptanceTests.Customers.Validators
 {
     public class BankAccountNumberValidatorTest
     {

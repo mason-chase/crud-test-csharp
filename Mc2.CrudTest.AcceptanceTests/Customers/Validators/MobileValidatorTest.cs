@@ -1,7 +1,7 @@
 ﻿using Mc2.CrudTest.Domain.Validators;
 using Xunit;
 
-namespace Mc2.CrudTest.AcceptanceTests.Validators
+namespace Mc2.CrudTest.AcceptanceTests.Customers.Validators
 {
     public class MobileValidatorTest
     {
