@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31729.503
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Presentation.Front", "Mc2.CrudTest.Presentation\Front\Mc2.CrudTest.Presentation.Front.csproj", "{4B62EAE3-1858-4833-9E36-EE77FADC2328}"
 EndProject
@@ -10,6 +10,20 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Shared", "Mc2.CrudTest.Presentation\Shared\Mc2.CrudTest.Shared.csproj", "{661369DC-0F78-4889-BA3B-639513A49789}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Presentation.Server", "Mc2.CrudTest.Presentation\Server\Mc2.CrudTest.Presentation.Server.csproj", "{8D41010B-AEF1-4742-B7EC-6A5AE62C45FC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{43547535-0B7A-4144-9DBA-DEC14BAD1F8A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{024B15FF-7DB2-4FC8-BFA6-3592AE8A7132}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.DataAccess", "Mc2.CrudTest.DataAccess\Mc2.CrudTest.DataAccess.csproj", "{11451E64-88DE-4212-8F58-71972BEA15ED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Api.UnitTests", "Mc2.CrudTest.Api.UnitTests\Mc2.CrudTest.Api.UnitTests.csproj", "{E3C2C41D-52E8-4B7A-A102-882D13914937}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Domain", "Mc2.Crud.Domain\Mc2.CrudTest.Domain.csproj", "{FB438CF5-BC79-4B9C-BB80-6803F8BF200B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Application", "Mc2.CrudTest.Application\Mc2.CrudTest.Application.csproj", "{850148F0-6865-472B-A220-841EEE08332B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Api", "Mc2.Crud.Api\Mc2.CrudTest.Api.csproj", "{380F6E8E-ED1F-4192-9104-32F9139296DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +47,34 @@ Global
 		{8D41010B-AEF1-4742-B7EC-6A5AE62C45FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D41010B-AEF1-4742-B7EC-6A5AE62C45FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D41010B-AEF1-4742-B7EC-6A5AE62C45FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11451E64-88DE-4212-8F58-71972BEA15ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11451E64-88DE-4212-8F58-71972BEA15ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11451E64-88DE-4212-8F58-71972BEA15ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11451E64-88DE-4212-8F58-71972BEA15ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3C2C41D-52E8-4B7A-A102-882D13914937}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3C2C41D-52E8-4B7A-A102-882D13914937}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3C2C41D-52E8-4B7A-A102-882D13914937}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3C2C41D-52E8-4B7A-A102-882D13914937}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB438CF5-BC79-4B9C-BB80-6803F8BF200B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB438CF5-BC79-4B9C-BB80-6803F8BF200B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB438CF5-BC79-4B9C-BB80-6803F8BF200B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB438CF5-BC79-4B9C-BB80-6803F8BF200B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{850148F0-6865-472B-A220-841EEE08332B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{850148F0-6865-472B-A220-841EEE08332B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{850148F0-6865-472B-A220-841EEE08332B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{850148F0-6865-472B-A220-841EEE08332B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{380F6E8E-ED1F-4192-9104-32F9139296DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{380F6E8E-ED1F-4192-9104-32F9139296DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{380F6E8E-ED1F-4192-9104-32F9139296DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{380F6E8E-ED1F-4192-9104-32F9139296DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{00E0E714-1EB4-4B62-950F-AE7C3BFD6766} = {43547535-0B7A-4144-9DBA-DEC14BAD1F8A}
+		{11451E64-88DE-4212-8F58-71972BEA15ED} = {024B15FF-7DB2-4FC8-BFA6-3592AE8A7132}
+		{E3C2C41D-52E8-4B7A-A102-882D13914937} = {43547535-0B7A-4144-9DBA-DEC14BAD1F8A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B5A26C9-68C1-49D9-9F32-AF907A1730C2}
