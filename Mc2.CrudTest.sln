@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mc2.CrudTest.Persistence", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mc2.CrudTest.Infrastructure", "Mc2.CrudTest.Infrastructure\Mc2.CrudTest.Infrastructure.csproj", "{9AE35C53-10D2-4B4E-ACB6-8F275235BC34}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mc2.CrudTest.DataAccessTest", "Mc2.CrudTest.DataAccessTest\Mc2.CrudTest.DataAccessTest.csproj", "{2DE08CC5-11A5-4575-B851-F34F42030A45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{9AE35C53-10D2-4B4E-ACB6-8F275235BC34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AE35C53-10D2-4B4E-ACB6-8F275235BC34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AE35C53-10D2-4B4E-ACB6-8F275235BC34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DE08CC5-11A5-4575-B851-F34F42030A45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DE08CC5-11A5-4575-B851-F34F42030A45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DE08CC5-11A5-4575-B851-F34F42030A45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DE08CC5-11A5-4575-B851-F34F42030A45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
