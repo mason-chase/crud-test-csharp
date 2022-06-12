@@ -45,6 +45,11 @@ namespace Mc2.CrudTest.Api.Contracts.Customers
             };
         }
 
+        /// <summary>
+        /// Map Api update object to application command object
+        /// </summary>
+        /// <param name="customerUpdate"></param>
+        /// <returns></returns>
         public static UpdateCustomerCommand MapToUpdateCommand(CustomerCreate customerUpdate)
         {
             return new UpdateCustomerCommand
