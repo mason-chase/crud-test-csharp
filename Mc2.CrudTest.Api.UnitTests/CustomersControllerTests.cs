@@ -34,7 +34,7 @@ namespace Mc2.CrudTest.Api.Test
         }
 
         [Fact]
-        public async void GetById_returns_correctResult()
+        public void GetById_returns_correctResult()
         {
             //arrange
             var controller = new CustomerController(_DBContextOption);
@@ -112,7 +112,7 @@ namespace Mc2.CrudTest.Api.Test
         {
             //arrange
             var controller = new CustomerController(_DBContextOption);
-            long id = 3;
+            //long id = 3;
 
 
             //act

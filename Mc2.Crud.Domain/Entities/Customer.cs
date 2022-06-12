@@ -2,15 +2,13 @@
 {
     public class Customer
     {
-        private Customer() { }
-
         public long Id { get; set; }
-        public string Firstname { get; private set; }
-        public string Lastname { get; private set; }
+        public string Firstname { get; private set; } = String.Empty;
+        public string Lastname { get; private set; } = String.Empty;
         public DateTime DateOfBirth { get; private set; }
         public ulong PhoneNumber { get; private set; }
-        public string Email { get; private set; }
-        public string BankAccountNumber { get; private set; }
+        public string Email { get; private set; } = String.Empty;
+        public string BankAccountNumber { get; private set; } = String.Empty;
 
 
         public static Customer CreateCustomer(long id, string firstName, string lastname, DateTime dateOfBirth,

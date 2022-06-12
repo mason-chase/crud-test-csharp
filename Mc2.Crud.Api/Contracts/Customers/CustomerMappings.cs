@@ -21,7 +21,7 @@ namespace Mc2.CrudTest.Api.Contracts.Customers
             {
                 Firstname = customerCreate.Firstname,
                 Lastname = customerCreate.Lastname,
-                DateOfBirth = customerCreate.DateOfBirth.Value,
+                DateOfBirth = customerCreate.DateOfBirth,
                 PhoneNumber = customerCreate.PhoneNumber,
                 Email = customerCreate.Email,
                 BankAccountNumber = customerCreate.BankAccountNumber
@@ -50,9 +50,9 @@ namespace Mc2.CrudTest.Api.Contracts.Customers
             return new UpdateCustomerCommand
             {
                 Id = customerUpdate.Id,
-                Firstname = customerUpdate.Firstname,
-                Lastname = customerUpdate.Lastname,
-                DateOfBirth = customerUpdate.DateOfBirth.Value,
+                Firstname = customerUpdate.Firstname.ToLower(),
+                Lastname = customerUpdate.Lastname.ToLower(),
+                DateOfBirth = customerUpdate.DateOfBirth,
                 PhoneNumber = customerUpdate.PhoneNumber,
                 Email = customerUpdate.Email,
                 BankAccountNumber = customerUpdate.BankAccountNumber

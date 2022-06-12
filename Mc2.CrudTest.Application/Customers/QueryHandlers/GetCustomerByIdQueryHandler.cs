@@ -17,7 +17,7 @@ namespace Mc2.CrudTest.Application.Customers.QueryHandlers
         {
             _dataContext = dataContext;
         }
-        public async Task<Customer> Handle(GetCustomerById request) 
+        public async Task<Customer?> Handle(GetCustomerById request) 
         {
             return await _dataContext.Customers.FirstOrDefaultAsync(c => c.Id == request.CustomerId);
         }

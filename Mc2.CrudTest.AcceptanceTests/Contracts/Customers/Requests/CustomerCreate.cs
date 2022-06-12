@@ -1,10 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace Mc2.CrudTest.Api.Contracts.Customers.Requests
+namespace Mc2.CrudTest.AcceptanceTests.Contracts.Customers.Requests
 {
     public record CustomerCreate
     {
-        public long Id { get; set; }
         [Required]
         [MinLength(3)]
         [MaxLength(50)]

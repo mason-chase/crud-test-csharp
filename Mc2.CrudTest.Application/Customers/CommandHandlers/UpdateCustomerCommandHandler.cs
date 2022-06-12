@@ -23,7 +23,7 @@ namespace Mc2.CrudTest.Application.Customers.CommandHandlers
         public async Task<Customer> Handle(UpdateCustomerCommand request)
         {
             var customer = await _dataContext.Customers.FirstOrDefaultAsync(c => c.Id == request.Id);
-            if (customer is null) return null;
+            if (customer is null) return new Customer();
             var customerUpdate = Customer.CreateCustomer(request.Id, request.Firstname, request.Lastname, request.DateOfBirth, request.PhoneNumber, request.Email, request.BankAccountNumber);
             customer.UpdateCustomer(customerUpdate);
             _dataContext.Customers.Update(customer);
