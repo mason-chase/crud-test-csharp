@@ -6,8 +6,10 @@ using Mc2.CrudTest.Application.Customers.QueryHandlers;
 using Mc2.CrudTest.DataAccess;
 using Mc2.CrudTest.Domain.Commands;
 using Mc2.CrudTest.Domain.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Mc2.CrudTest.Api.Controllers
 {
@@ -15,24 +17,21 @@ namespace Mc2.CrudTest.Api.Controllers
     [Route("api/[controller]")]
     public class CustomerController : Controller
     {
-        private readonly DataContext _dataContext;
-        public CustomerController(DbContextOptions dbOptions)
+        private readonly IMediator _mediator;
+
+        public CustomerController(IMediator mediator , DbContextOptions dbOptions)
         {
-            _dataContext = new DataContext(dbOptions);
+            _mediator = mediator;
         }
 
-        //To Do: add model validation with [ValidationModel] attrebute.
         //To Do: Add exception filter to api.
 
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetById(long id)
         {
-            GetCustomerByIdQueryHandler handler;
             var query = new GetCustomerById { CustomerId = id };
-
-            handler = new GetCustomerByIdQueryHandler(_dataContext);
-            var response = await handler.Handle(query);
+            var response = await _mediator.Send(query);
             if (response is null) return NotFound($" no customer with id {id} found!");
             var customer = CustomerMappings.MapToResponse(response);
             return Ok(customer);
@@ -41,25 +40,25 @@ namespace Mc2.CrudTest.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            GetAllCustomersQueryHandler handler;
-            List<CustomerResponse> customerReponses = new List<CustomerResponse>();
-            var query = new GetAllCustomers();
-
-            handler = new GetAllCustomersQueryHandler(_dataContext);
-            var response = await handler.Handle(query);
-            response.ToList().ForEach(c => { customerReponses.Add(CustomerMappings.MapToResponse(c)); });
-
-            return Ok(customerReponses);
+            try
+            {
+                List<CustomerResponse> customerReponses = new List<CustomerResponse>();
+                var query = new GetAllCustomersQuery();
+                var response = await _mediator.Send(query);
+                response.ToList().ForEach(c => { customerReponses.Add(CustomerMappings.MapToResponse(c)); });
+                return Ok(customerReponses);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateCustomer([FromBody] CustomerCreate customer)
         {
-            CreateCustomerCommandHandler handler;
-
             var request = CustomerMappings.MapToCommand(customer);
-            handler = new CreateCustomerCommandHandler(_dataContext);
-            var response = await handler.Handle(request);
+            var response = await _mediator.Send(request);
             var customerReponse = CustomerMappings.MapToResponse(response);
             return CreatedAtAction(nameof(GetById), new { id = response.Id }, customerReponse);
         }
@@ -68,12 +67,9 @@ namespace Mc2.CrudTest.Api.Controllers
         [Route("{id}")]
         public async Task<IActionResult> UpdateCustomer(long id, CustomerCreate updatedCustomer)
         {
-            UpdateCustomerCommandHandler handler;
-
             var command = CustomerMappings.MapToUpdateCommand(updatedCustomer);
             command.Id = id;
-            handler = new UpdateCustomerCommandHandler(_dataContext);
-            var response = await handler.Handle(command);
+            var response = await _mediator.Send(command);
             if (response is null) return NotFound();
             return NoContent();
 
@@ -83,11 +79,8 @@ namespace Mc2.CrudTest.Api.Controllers
         [Route("{id}")]
         public async Task<IActionResult> DeleteCustomer(long id)
         {
-            DeleteCustomerCommandHandler handler;
-
             var command = new DeleteCustomerCommand { Id = id };
-            handler = new DeleteCustomerCommandHandler(_dataContext);
-            await handler.Handle(command);
+            await _mediator.Send(command);
             return NoContent();
 
         }

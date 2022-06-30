@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mc2.CrudTest.DataAccess
 {
-    public class DataContext : IdentityDbContext
+    public class DataContext : DbContext
     {
         public DataContext(DbContextOptions options) : base(options)
         {
