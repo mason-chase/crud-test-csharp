@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Mc2.CrudTest.Domain.Commands;
+using MediatR;
 
 namespace Mc2.CrudTest.Application.Customers.CommandHandlers
 {
 
 
-    public class UpdateCustomerCommandHandler
+    public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, Customer>
     {
         private readonly DataContext _dataContext;
         public UpdateCustomerCommandHandler(DataContext dataContext)
@@ -20,15 +21,14 @@ namespace Mc2.CrudTest.Application.Customers.CommandHandlers
             _dataContext = dataContext;
         }
 
-        public async Task<Customer> Handle(UpdateCustomerCommand request)
+        public async Task<Customer> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
             var customer = await _dataContext.Customers.FirstOrDefaultAsync(c => c.Id == request.Id);
-            if (customer is null) return new Customer();
-            var customerUpdate = Customer.CreateCustomer(request.Id, request.Firstname, request.Lastname, request.DateOfBirth, request.PhoneNumber, request.Email, request.BankAccountNumber);
-            customer.UpdateCustomer(customerUpdate);
-            _dataContext.Customers.Update(customer);
+            if (customer is null) return null;
+            var customerUpdate = Customer.UpdateCustomer(request.Id, request.Firstname, request.Lastname, request.DateOfBirth, request.PhoneNumber, request.Email, request.BankAccountNumber);
+            _dataContext.Customers.Update(customerUpdate);
             await _dataContext.SaveChangesAsync();
-            return customer;
+            return customerUpdate;
         }
     }
 }

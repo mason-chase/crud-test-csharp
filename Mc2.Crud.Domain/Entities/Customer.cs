@@ -1,4 +1,7 @@
-﻿namespace Mc2.CrudTest.Domain.Entities
+﻿using Mc2.CrudTest.Domain.Exceptions;
+using Mc2.CrudTest.Domain.Validators.CustomerValidators;
+
+namespace Mc2.CrudTest.Domain.Entities
 {
     public class Customer
     {
@@ -14,9 +17,8 @@
         public static Customer CreateCustomer(long id, string firstName, string lastname, DateTime dateOfBirth,
             ulong phoneNumber, string email, string BankAccountNumber)
         {
-            //To Do: add validations here.
-
-            return new Customer
+            var validator = new CustomerValidator();
+            var objectToValidate = new Customer
             {
                 Id = id,
                 Firstname = firstName,
@@ -26,12 +28,38 @@
                 Email = email,
                 BankAccountNumber = BankAccountNumber
             };
+            var validationResult = validator.Validate(objectToValidate);
+            if (validationResult.IsValid) return objectToValidate;
+            var exception = new CustomerNotValidException("Customer is not valid !");
+            foreach (var error in validationResult.Errors)
+            {
+                exception.ValidationErrors.Add(error.ErrorMessage);
+            }
+            throw exception;
         }
 
-        public void UpdateCustomer(Customer customer)
+        public static Customer UpdateCustomer(long id, string firstName, string lastname, DateTime dateOfBirth,
+            ulong phoneNumber, string email, string BankAccountNumber)
         {
-            //To Do: add validation here.
-
+            var validator = new CustomerValidator();
+            var objectToValidate = new Customer
+            {
+                Id = id,
+                Firstname = firstName,
+                Lastname = lastname,
+                DateOfBirth = dateOfBirth,
+                PhoneNumber = phoneNumber,
+                Email = email,
+                BankAccountNumber = BankAccountNumber
+            };
+            var validationResult = validator.Validate(objectToValidate);
+            if (validationResult.IsValid) return objectToValidate;
+            var exception = new CustomerNotValidException("Customer is not valid !");
+            foreach (var error in validationResult.Errors)
+            {
+                exception.ValidationErrors.Add(error.ErrorMessage);
+            }
+            throw exception;
         }
     }
 }
