@@ -1,3 +1,4 @@
+using Mc2.CrudTest.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +33,8 @@ namespace Mc2.CrudTest.WebApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Mc2.CrudTest.WebApi", Version = "v1" });
             });
+
+            services.AddInfrastructure(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
