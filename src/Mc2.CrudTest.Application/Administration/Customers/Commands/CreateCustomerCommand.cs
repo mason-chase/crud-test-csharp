@@ -37,13 +37,11 @@ namespace Mc2.CrudTest.Application.Administration.Customers.Commands
             RuleFor(x => x.FirstName)
                 .NotEmpty()
                 .MaximumLength(36)
-                .Must(UniqueFirstName).WithMessage("'{PropertyName}' is duplicated.")
                 .WithName("First Name");
 
             RuleFor(x => x.Lastname)
                 .NotEmpty()
                 .MaximumLength(36)
-                .Must(UniqueLastname).WithMessage("'{PropertyName}' is duplicated.")
                 .WithName("Last Name");
 
             RuleFor(x => x.PhoneNumber)
@@ -67,16 +65,9 @@ namespace Mc2.CrudTest.Application.Administration.Customers.Commands
                 .ValidBankAccountNumber()
                 .Must(UniqueBankAccountNumber).WithMessage("'{PropertyName}' is duplicated.")
                 .WithName("Bank Account Number");
-        }
 
-        private bool UniqueFirstName(string firstName)
-        {
-            return !_dbContext.Customers.Any(x => x.FirstName == firstName);
-        }
-
-        private bool UniqueLastname(string lastName)
-        {
-            return !_dbContext.Customers.Any(x => x.Lastname == lastName);
+            RuleFor(x => x)
+                .Must(UniqueCustomer).WithMessage("Duplicated customer with current FirstName, LastName and DateOfBirth.");
         }
 
         private bool UniqueEmail(string email)
@@ -92,6 +83,14 @@ namespace Mc2.CrudTest.Application.Administration.Customers.Commands
         private bool UniqueBankAccountNumber(string bankAccountNumber)
         {
             return !_dbContext.Customers.Any(x => x.BankAccountNumber == bankAccountNumber);
+        }
+
+        private bool UniqueCustomer(CreateCustomerCommand command)
+        {
+            return !_dbContext.Customers.Any(x =>
+                    x.FirstName == command.FirstName &&
+                    x.Lastname == command.Lastname &&
+                    x.DateOfBirth == command.DateOfBirth);
         }
     }
 

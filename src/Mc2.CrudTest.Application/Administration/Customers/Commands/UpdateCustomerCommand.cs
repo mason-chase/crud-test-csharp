@@ -39,13 +39,11 @@ namespace Mc2.CrudTest.Application.Administration.Customers.Commands
             RuleFor(x => x.FirstName)
                 .NotEmpty()
                 .MaximumLength(36)
-                .Must(UniqueFirstName).WithMessage("'{PropertyName}' is duplicated.")
                 .WithName("First Name");
 
             RuleFor(x => x.Lastname)
                 .NotEmpty()
                 .MaximumLength(36)
-                .Must(UniqueLastname).WithMessage("'{PropertyName}' is duplicated.")
                 .WithName("Last Name");
 
             RuleFor(x => x.PhoneNumber)
@@ -69,30 +67,10 @@ namespace Mc2.CrudTest.Application.Administration.Customers.Commands
                 .ValidBankAccountNumber()
                 .Must(UniqueBankAccountNumber).WithMessage("'{PropertyName}' is duplicated.")
                 .WithName("Bank Account Number");
-        }
 
-        private bool UniqueFirstName(UpdateCustomerCommand command, string firstName)
-        {
-            var entity = _dbContext.Customers.Find(command.Id);
+            RuleFor(x => x)
+                .Must(UniqueCustomer).WithMessage("Duplicated customer with current FirstName, LastName and DateOfBirth.");
 
-            if (entity?.FirstName == firstName)
-            {
-                return true;
-            }
-
-            return !_dbContext.Customers.Any(x => x.FirstName == firstName);
-        }
-
-        private bool UniqueLastname(UpdateCustomerCommand command, string lastName)
-        {
-            var entity = _dbContext.Customers.Find(command.Id);
-
-            if (entity?.Lastname == lastName)
-            {
-                return true;
-            }
-
-            return !_dbContext.Customers.Any(x => x.Lastname == lastName);
         }
 
         private bool UniqueEmail(UpdateCustomerCommand command, string email)
@@ -129,6 +107,23 @@ namespace Mc2.CrudTest.Application.Administration.Customers.Commands
             }
 
             return !_dbContext.Customers.Any(x => x.BankAccountNumber == bankAccountNumber);
+        }
+
+        private bool UniqueCustomer(UpdateCustomerCommand command)
+        {
+            var entity = _dbContext.Customers.Find(command.Id);
+
+            if (entity?.FirstName == command.FirstName && 
+                entity?.Lastname == command.Lastname && 
+                entity?.DateOfBirth == command.DateOfBirth)
+            {
+                return true;
+            }
+
+            return !_dbContext.Customers.Any(x =>
+                    x.FirstName == command.FirstName &&
+                    x.Lastname == command.Lastname &&
+                    x.DateOfBirth == command.DateOfBirth);
         }
     }
 
