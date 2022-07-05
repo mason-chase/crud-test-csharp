@@ -31,7 +31,6 @@ namespace Mc2.CrudTest.Application.UnitTests.Common.Validators
         [Theory]
         [InlineData("     ")]
         [InlineData("json200 @tomas.com")]
-        [InlineData(null)]
         public void Should_Be_InValid_If_Contains_WhiteSpace(string value)
         {
             Assert.False(Validate(value));
@@ -39,7 +38,6 @@ namespace Mc2.CrudTest.Application.UnitTests.Common.Validators
 
         [Theory]
         [InlineData("@domain.com")]
-        [InlineData(null)]
         public void Should_Be_InValid_Without_Username(string value)
         {
             Assert.False(Validate(value));
@@ -48,7 +46,6 @@ namespace Mc2.CrudTest.Application.UnitTests.Common.Validators
         [Theory]
         [InlineData("json.tomas")]
         [InlineData("json.tomas@")]
-        [InlineData(null)]
         public void Should_Be_InValid_Without_Domain_Name(string value)
         {
             Assert.False(Validate(value));
@@ -57,7 +54,6 @@ namespace Mc2.CrudTest.Application.UnitTests.Common.Validators
         [Theory]
         [InlineData("json.tomas")]
         [InlineData("json.tomas.com")]
-        [InlineData(null)]
         public void Should_Be_InValid_Without_Atsig_Symbol(string value)
         {
             Assert.False(Validate(value));
