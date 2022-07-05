@@ -16,8 +16,4 @@
     <ProjectReference Include="..\Mc2.CrudTest.Domain\Mc2.CrudTest.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Administration\" />
-  </ItemGroup>
-
 </Project>
