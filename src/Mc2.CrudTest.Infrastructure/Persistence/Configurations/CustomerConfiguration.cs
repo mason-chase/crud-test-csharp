@@ -32,6 +32,9 @@ namespace Mc2.CrudTest.Infrastructure.Persistence.Configurations
             builder.Property(x => x.BankAccountNumber)
                 .HasMaxLength(18)
                 .IsRequired();
+
+            builder.HasIndex(x => new { x.FirstName, x.Lastname, x.DateOfBirth })
+                .IsUnique();
         }
     }
 }
