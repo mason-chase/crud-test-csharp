@@ -31,6 +31,7 @@ namespace Mc2.CrudTest.WebApi
         {
             services.AddControllers(options =>
             {
+                options.Filters.Add(new ApiResultFilterAttribute());
                 options.Filters.Add(new ExceptionHandlerAttribute());
             });
             services.AddSwaggerGen(c =>

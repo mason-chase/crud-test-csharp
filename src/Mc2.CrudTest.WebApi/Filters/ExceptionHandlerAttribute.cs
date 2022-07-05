@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
+using Mc2.CrudTest.WebApi.Helpers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Mc2.CrudTest.Application.Common.Exceptions;
 
@@ -45,14 +46,14 @@ namespace Mc2.CrudTest.WebApi.Filters
 
         private void HandleNotFoundException(ExceptionContext context)
         {
-            context.Result = new StatusCodeResult(StatusCodes.Status404NotFound);
+            context.Result = ApiResultHelper.GenerateNotFoundResult();
 
             context.ExceptionHandled = true;
         }
 
         private void HandleUnknownException(ExceptionContext context)
         {
-            context.Result = new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            context.Result = ApiResultHelper.GenerateServerErrorResult();
 
             context.ExceptionHandled = true;
         }
