@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using Mc2.CrudTest.Application;
 using System.Collections.Generic;
+using Mc2.CrudTest.WebApi.Filters;
 using Mc2.CrudTest.Infrastructure;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -28,7 +29,10 @@ namespace Mc2.CrudTest.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                options.Filters.Add(new ExceptionHandlerAttribute());
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Mc2.CrudTest.WebApi", Version = "v1" });
