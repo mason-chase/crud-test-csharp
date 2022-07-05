@@ -12,7 +12,7 @@ namespace Mc2.CrudTest.Infrastructure.Persistence
 {
     public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
-        public DbSet<Customer> Customers { get; }
+        public DbSet<Customer> Customers { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
