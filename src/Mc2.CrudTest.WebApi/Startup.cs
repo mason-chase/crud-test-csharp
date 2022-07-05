@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using Mc2.CrudTest.Application;
 using System.Collections.Generic;
 using Mc2.CrudTest.Infrastructure;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
@@ -34,6 +35,7 @@ namespace Mc2.CrudTest.WebApi
             });
 
             services.AddApplication();
+            services.AddFluentValidation();
             services.AddInfrastructure(Configuration);
         }
 
