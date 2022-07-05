@@ -90,7 +90,7 @@ namespace Mc2.CrudTest.Application.Administration.Customers.Commands
             return !_dbContext.Customers.Any(x =>
                     x.FirstName == command.FirstName &&
                     x.Lastname == command.Lastname &&
-                    x.DateOfBirth == command.DateOfBirth);
+                    x.DateOfBirth.Date == command.DateOfBirth.Date);
         }
     }
 

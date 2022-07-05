@@ -115,7 +115,7 @@ namespace Mc2.CrudTest.Application.Administration.Customers.Commands
 
             if (entity?.FirstName == command.FirstName && 
                 entity?.Lastname == command.Lastname && 
-                entity?.DateOfBirth == command.DateOfBirth)
+                entity?.DateOfBirth.Date == command.DateOfBirth.Date)
             {
                 return true;
             }
