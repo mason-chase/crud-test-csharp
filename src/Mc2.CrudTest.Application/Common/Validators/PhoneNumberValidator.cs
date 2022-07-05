@@ -11,32 +11,26 @@ using System.Text.RegularExpressions;
 
 namespace Mc2.CrudTest.Application.Common.Validators
 {
-    public class PhoneNumberValidator<T> : PropertyValidator<T, string>, IRegularExpressionValidator
+    public class PhoneNumberValidator<T> : PropertyValidator<T, string>
     {
         public override string Name => "PhoneNumberValidator";
-        public string Expression => @"^(\+)[1-9]{1}([0-9][\s]*){9,16}$";
 
         public override bool IsValid(ValidationContext<T> context, string value)
         {
-             var isValidPhoneNumber = Regex.IsMatch(value, Expression);
+            var phoneNumberValidator = PhoneNumberUtil.GetInstance();
 
-            if (isValidPhoneNumber)
+            try
             {
-                var phoneNumberValidator = PhoneNumberUtil.GetInstance();
+                phoneNumberValidator.Parse(value, string.Empty);
 
-                try
+                return true;
+            }
+            catch
+            {
+                context.AddFailure(new ValidationFailure
                 {
-                    phoneNumberValidator.Parse(value, string.Empty);
-
-                    return true;
-                }
-                catch(NumberParseException ex)
-                {
-                    context.AddFailure(new ValidationFailure
-                    {
-                         ErrorMessage = "The phone number is not in international format. Example for US: +1 XXX XXX XXXX.",
-                    });
-                }
+                    ErrorMessage = "The phone number is not in international format. Example for US: +1 XXX XXX XXXX.",
+                });
             }
 
             return false;
