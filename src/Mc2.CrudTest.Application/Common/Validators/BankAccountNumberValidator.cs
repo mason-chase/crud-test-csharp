@@ -18,6 +18,11 @@ namespace Mc2.CrudTest.Application.Common.Validators
 
         public override bool IsValid(ValidationContext<T> context, string value)
         {
+            if (value == null)
+            {
+                return false;
+            }
+
             return Regex.IsMatch(value, Expression);
         }
 
