@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using FluentValidation.Validators;
 using System.Text.RegularExpressions;
 
-namespace Mc2.CrudTest.Application.Validators
+namespace Mc2.CrudTest.Application.Common.Validators
 {
     public class EmailAddressValidator<T> : PropertyValidator<T, string>, IRegularExpressionValidator
     {

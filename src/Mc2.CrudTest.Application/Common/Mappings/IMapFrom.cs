@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace Mc2.CrudTest.Application.Mappings
+namespace Mc2.CrudTest.Application.Common.Mappings
 {
     public interface IMapFrom<T>
     {
