@@ -15,24 +15,61 @@ namespace Mc2.CrudTest.Application.UnitTests.Common.Validators
         }
 
         [Theory]
-        [InlineData("json.tomas@gmail.com")]
-        [InlineData("json2omas@domain.com")]
-        [InlineData("json_tomas@domain.com")]
-        public void Should_Be_Valid_EmailAddress(string phoneNumber)
+        [InlineData(null)]
+        public void Should_Be_InValid_For_Null(string value)
         {
-            Assert.True(Validate(phoneNumber));
+            Assert.False(Validate(value));
         }
 
         [Theory]
         [InlineData("")]
-        [InlineData(null)]
-        [InlineData("a1b2c3d4")]
-        [InlineData("jsontomasgmail.com")]
-        [InlineData("jsontomas@gmailcom")]
-        [InlineData("json tomas@gmail.com")]
-        public void Should_Be_InValid_EmailAddress(string phoneNumber)
+        public void Should_Be_InValid_For_Empty_String(string value)
         {
-            Assert.False(Validate(phoneNumber));
+            Assert.False(Validate(value));
+        }
+
+        [Theory]
+        [InlineData("     ")]
+        [InlineData("json200 @tomas.com")]
+        [InlineData(null)]
+        public void Should_Be_InValid_If_Contains_WhiteSpace(string value)
+        {
+            Assert.False(Validate(value));
+        }
+
+        [Theory]
+        [InlineData("@domain.com")]
+        [InlineData(null)]
+        public void Should_Be_InValid_Without_Username(string value)
+        {
+            Assert.False(Validate(value));
+        }
+
+        [Theory]
+        [InlineData("json.tomas")]
+        [InlineData("json.tomas@")]
+        [InlineData(null)]
+        public void Should_Be_InValid_Without_Domain_Name(string value)
+        {
+            Assert.False(Validate(value));
+        }
+
+        [Theory]
+        [InlineData("json.tomas")]
+        [InlineData("json.tomas.com")]
+        [InlineData(null)]
+        public void Should_Be_InValid_Without_Atsig_Symbol(string value)
+        {
+            Assert.False(Validate(value));
+        }
+
+        [Theory]
+        [InlineData("json.tomas@gmail.com")]
+        [InlineData("json2omas@domain.com")]
+        [InlineData("json_tomas@domain.com")]
+        public void Should_Be_Valid_With_Username_Domain_Name_And_Atsig_Symbol(string phoneNumber)
+        {
+            Assert.True(Validate(phoneNumber));
         }
 
         private bool Validate(string emailAddress)
