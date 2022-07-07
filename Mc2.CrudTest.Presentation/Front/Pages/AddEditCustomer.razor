@@ -1,0 +1,64 @@
+﻿@page "/customer/add"
+@page "/customer/edit/{customerID:int}"
+@inherits AddEditCustomerBase
+
+<h1>@Title Customer</h1>
+<hr />
+
+@if (Error.Length > 0)
+{
+    <div class="alert alert-warning" role="alert">
+        @Error
+    </div>
+}
+
+<EditForm Model="@customer" OnValidSubmit="SaveCustomer">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="Name" class="form-label">First Name</label>
+        <div class="col-md-4">
+            <InputText class="form-control" placeholder="Taher" @bind-Value="customer.FirstName"/>
+        </div>
+        <ValidationMessage For="@(() => customer.FirstName)" />
+    </div>
+    <div class="mb-3">
+        <label for="Department" class="form-label">Last Name</label>
+        <div class="col-md-4">
+            <InputText class="form-control" placeholder="Fattahi" @bind-Value="customer.LastName" />
+        </div>
+        <ValidationMessage For="@(() => customer.LastName)" />
+    </div>
+    <div class="mb-3">
+        <label for="Department" class="form-label">Date Of Birth</label>
+        <div class="col-md-4">
+            <InputDate class="form-control" placeholder="Fattahi" @bind-Value="customer.DateOfBirth" />
+        </div>
+        <ValidationMessage For="@(() => customer.DateOfBirth)" />
+    </div>
+    <div class="mb-3">
+        <label for="Department" class="form-label">Phone Number</label>
+        <div class="col-md-4">
+            <input class="form-control" data-mask="00.00.00.00.00" placeholder="989115467885"  value="@PhoneNumber" @onchange="@((ChangeEventArgs __e) => customer.PhoneNumber =  (ulong)(Decimal.Parse(__e.Value.ToString())))" />
+        </div>
+        <ValidationMessage For="@(() => customer.PhoneNumber)" />
+    </div>
+    <div class="mb-3">
+        <label for="Department" class="form-label">Email</label>
+        <div class="col-md-4">
+            <InputText class="form-control" placeholder="test@gmail.com" @bind-Value="customer.Email" />
+        </div>
+        <ValidationMessage For="@(() => customer.Email)" />
+    </div>
+    <div class="mb-3">
+        <label for="Department" class="form-label">BankAccountNumber</label>
+        <div class="col-md-4">
+            <InputText class="form-control" placeholder="6037-9917-0000-0000" @bind-Value="customer.BankAccountNumber" />
+        </div>
+        <ValidationMessage For="@(() => customer.BankAccountNumber)" />
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+    </div>
+</EditForm>

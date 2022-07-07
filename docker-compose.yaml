@@ -1,0 +1,17 @@
+version: "3.3"
+services:
+    web:
+        build: .
+        ports:
+            - 5000:5000
+        environment:
+          - ASPNETCORE_URLS=http://0.0.0.0:5000
+        depends_on:  
+            - ms-sql-server  
+    ms-sql-server:
+        image: mcr.microsoft.com/mssql/server
+        environment:
+            - SA_PASSWORD=klfgjkagshdkljkgVeryComplex123Password
+            - ACCEPT_EULA=Y
+        ports:
+          - 1433:1433
