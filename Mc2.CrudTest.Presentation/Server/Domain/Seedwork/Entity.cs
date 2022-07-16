@@ -1,3 +1,7 @@
+using MediatR;
+using System;
+using System.Collections.Generic;
+
 namespace Domain.Seedwork
 {
 

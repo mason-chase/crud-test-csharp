@@ -1,3 +1,7 @@
+using Domain;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
 namespace Infrastructure.EntityConfigurations
 {
    class BuyerEntityTypeConfiguration
@@ -15,7 +19,7 @@ namespace Infrastructure.EntityConfigurations
             .UseHiLo("customerseq", CustomerContext.DEFAULT_SCHEMA);
 
         // make firstName, LastName, Email unique by default
-        customerConfiguration.HasIndex(b => "DateOfBirth","FirstName","LastName")
+        customerConfiguration.HasIndex(b => new { b.DateOfBirth, b.Firstname, b.Lastname })
             .IsUnique(true);
 
         // make sure email is unique
@@ -29,7 +33,6 @@ namespace Infrastructure.EntityConfigurations
         customerConfiguration.HasIndex("IdentityGuid")
             .IsUnique(true);
 
-        customerConfiguration.Property(b => b.Name);
 
         customerConfiguration.Property(b => b.Firstname)
             .HasMaxLength(200)
@@ -55,5 +58,5 @@ namespace Infrastructure.EntityConfigurations
             .IsRequired();
 
     }
-} 
+}
 }

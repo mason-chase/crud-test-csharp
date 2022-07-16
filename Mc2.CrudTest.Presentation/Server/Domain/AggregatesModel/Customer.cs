@@ -1,9 +1,12 @@
+using Domain.Seedwork;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain
 {
     public class Customer
-    : Entity, IAggregateRoot, IValidatebleObject
+    : Entity, IAggregateRoot, IValidatableObject
     {
         public string IdentityGuid { get; private set; }
         public string Firstname { get; private set; }
@@ -25,5 +28,9 @@ namespace Domain
             Firstname = !string.IsNullOrWhiteSpace(firstName) ? firstName : throw new ArgumentNullException(nameof(firstName));
         }
 
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

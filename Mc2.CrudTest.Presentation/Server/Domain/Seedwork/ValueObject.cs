@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Domain.Seedwork
 {
     public abstract class ValueObject

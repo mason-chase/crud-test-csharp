@@ -1,13 +1,18 @@
+using Domain;
+using Domain.Seedwork;
+using System;
+using System.Threading.Tasks;
+
 namespace Infrastructure.Repositories
 {
-    
+
 public class CustomerRepository
     : ICustomerRepository
 {
-    private readonly OrderingContext _context;
+    private readonly CustomerContext _context;
     public IUnitOfWork UnitOfWork => _context;
 
-    public CustomerRepository(OrderingContext context)
+    public CustomerRepository(CustomerContext context)
     {
         _context = context ?? throw new ArgumentNullException(nameof(context));
     }

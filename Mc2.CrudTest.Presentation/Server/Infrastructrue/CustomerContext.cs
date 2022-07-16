@@ -1,10 +1,21 @@
+using Domain;
+using Domain.Seedwork;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.EntityFrameworkCore.Storage;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace Infrastructure
 {
     public class CustomerContext : DbContext, IUnitOfWork
 {
     public const string DEFAULT_SCHEMA = "customer";
-    public DbSet<Customer> Buyers { get; set; }
-    
+    public DbSet<Customer> Customers { get; set; }
+
     private readonly IMediator _mediator;
     private IDbContextTransaction _currentTransaction;
 
@@ -29,15 +40,15 @@ namespace Infrastructure
 
     public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken))
     {
-        // Dispatch Domain Events collection. 
+        // Dispatch Domain Events collection.
         // Choices:
-        // A) Right BEFORE committing data (EF SaveChanges) into the DB will make a single transaction including  
+        // A) Right BEFORE committing data (EF SaveChanges) into the DB will make a single transaction including
         // side effects from the domain event handlers which are using the same DbContext with "InstancePerLifetimeScope" or "scoped" lifetime
-        // B) Right AFTER committing data (EF SaveChanges) into the DB will make multiple transactions. 
-        // You will need to handle eventual consistency and compensatory actions in case of failures in any of the Handlers. 
+        // B) Right AFTER committing data (EF SaveChanges) into the DB will make multiple transactions.
+        // You will need to handle eventual consistency and compensatory actions in case of failures in any of the Handlers.
         await _mediator.DispatchDomainEventsAsync(this);
 
-        // After executing this line all the changes (from the Command Handler and Domain Event Handlers) 
+        // After executing this line all the changes (from the Command Handler and Domain Event Handlers)
         // performed through the DbContext will be committed
         var result = await base.SaveChangesAsync(cancellationToken);
 
@@ -97,10 +108,10 @@ namespace Infrastructure
 
 public class CustomerContextDesignFactory : IDesignTimeDbContextFactory<CustomerContext>
 {
-    public OrderingContext CreateDbContext(string[] args)
+    public CustomerContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<CustomerContext>()
-            .UseSqlServer("Server=.;Initial Catalog=Microsoft.eShopOnContainers.Services.OrderingDb;Integrated Security=true");
+            .UseSqlServer("Server=.;Initial Catalog=CustomerDb;Integrated Security=true");
 
         return new CustomerContext(optionsBuilder.Options, new NoMediator());
     }
