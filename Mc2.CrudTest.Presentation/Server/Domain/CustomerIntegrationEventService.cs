@@ -1,4 +1,5 @@
-﻿using Domain.Events.EventLog;
+﻿using Domain.Events;
+using Domain.Events.EventLog;
 using Infrastructure;
 using Mc2.CrudTest.Presentation.Server.Domain.Services;
 using MediatR;

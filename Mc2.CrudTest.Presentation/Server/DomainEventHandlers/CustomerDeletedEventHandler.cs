@@ -1,4 +1,4 @@
-﻿namespace Mc2.CrudTest.Presentation.Server.DomainEventHandlers.UserCreated
+﻿namespace Mc2.CrudTest.Presentation.Server.DomainEventHandlers.UserDeleted
 {
     using global::Domain.AggregatesModel.CustomerAggregate;
     using global::Domain.Events;
@@ -9,14 +9,14 @@
     using System.Threading.Tasks;
 
 
-    public class CustomerCreatedDomainHandler
-                   : INotificationHandler<CustomerCreatedEvent>
+    public class CustomerDeletedDomainHandler
+                   : INotificationHandler<CustomerDeletedEvent>
     {
         private readonly ICustomerRepository _customerRepository;
         private readonly ICustomerIntegrationEventService _customerIntegrationEventService;
 
 
-        public CustomerCreatedDomainHandler(
+        public CustomerDeletedDomainHandler(
                 ICustomerRepository customerRepository,
                 ICustomerIntegrationEventService customerIntegrationEventService)
         {
@@ -24,11 +24,11 @@
             _customerIntegrationEventService = customerIntegrationEventService;
         }
 
-        public async Task Handle(CustomerCreatedEvent customerCreatedEvent, CancellationToken cancellationToken)
+        public async Task Handle(CustomerDeletedEvent customerDeletedEvent, CancellationToken cancellationToken)
         {
-            var customer = _customerRepository.Add(customerCreatedEvent.Customer);
+            _customerRepository.Delete(customerDeletedEvent.Identity);
 
-            await _customerIntegrationEventService.AddAndSaveEventAsync(customerCreatedEvent);
+            await _customerIntegrationEventService.AddAndSaveEventAsync(customerDeletedEvent);
         }
     }
 }

@@ -4,11 +4,11 @@ namespace Domain.Events
 {
     public record CustomerDeletedEvent : IntegrationEvent, INotification
     {
-        public CustomerDeletedEvent(string identity)
+        public CustomerDeletedEvent(int identity)
         {
             Identity = identity;
         }
 
-        public string Identity { get; }
+        public int Identity { get; }
     }
 }
