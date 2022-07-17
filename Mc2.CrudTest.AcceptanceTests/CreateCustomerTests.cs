@@ -16,7 +16,7 @@ namespace Mc2.CrudTest.AcceptanceTests
             var firstName = "fakeCustomer";
             var lastName = "fakeCustomerFamily";
             var email = "a@a.com";
-            var phoneNumber = "+989010596159";
+            var phoneNumber = "+3197010265373";
             var dateOfBirth = new DateTime(1985, 2, 1);
             string bankAccountNumber = "0123-4567-8912-3456";
             //Act
@@ -34,7 +34,7 @@ namespace Mc2.CrudTest.AcceptanceTests
             var firstName = "fakeCustomer";
             var lastName = "fakeCustomerFamily";
             var email = "a@a.com";
-            var phoneNumber = "111111";
+            var phoneNumber = "+31654";
             var dateOfBirth = new DateTime(1985, 2, 1);
             string bankAccountNumber = "0123-4567-8912-3456"; ;
 
@@ -43,7 +43,7 @@ namespace Mc2.CrudTest.AcceptanceTests
             Assert.ThrowsException<ArgumentException>(a);
 
         }
-        [Fact]
+        [TestMethod, ExpectedException(typeof(ArgumentException))]
         public void Create_CustomerBadBankAccount_ReturnFail()
         {
             //Arrange
@@ -51,7 +51,7 @@ namespace Mc2.CrudTest.AcceptanceTests
             var firstName = "fakeCustomer";
             var lastName = "fakeCustomerFamily";
             var email = "a@a.com";
-            var phoneNumber = "00989010596159";
+            var phoneNumber = "+3197010265373";
             var dateOfBirth = new DateTime(1985, 2, 1);
             var bankAccountNumber = "6546468";
 
@@ -68,7 +68,7 @@ namespace Mc2.CrudTest.AcceptanceTests
             var firstName = "fakeCustomer";
             var lastName = "fakeCustomerFamily";
             var email = "aa.com";
-            var phoneNumber = "00989010596159";
+            var phoneNumber = "+3197010265373";
             var dateOfBirth = new DateTime(1985, 2, 1);
             string bankAccountNumber = "0123-4567-8912-3456";
 
@@ -86,7 +86,7 @@ namespace Mc2.CrudTest.AcceptanceTests
             var firstName = "fakeCustomer";
             var lastName = "fakeCustomerFamily";
             var email = "a@a.com";
-            var phoneNumber = "00989010596159";
+            var phoneNumber = "+3197010265373";
             var dateOfBirth = new DateTime(1985, 2, 1);
             string bankAccountNumber = "0123-4567-8912-3456";
 
@@ -105,7 +105,7 @@ namespace Mc2.CrudTest.AcceptanceTests
             var firstName = "fakeCustomer";
             var lastName = "fakeCustomerFamily";
             var email = "a@a.com";
-            var phoneNumber = "00989010596159";
+            var phoneNumber = "+3197010265373";
             var dateOfBirth = new DateTime(1985, 2, 1);
             string bankAccountNumber = "0123-4567-8912-3456";
 
