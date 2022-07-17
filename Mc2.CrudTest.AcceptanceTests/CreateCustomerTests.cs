@@ -1,3 +1,4 @@
+using Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Xunit;
@@ -11,18 +12,33 @@ namespace Mc2.CrudTest.AcceptanceTests
         {
             //Arrange
             var identity = new Guid().ToString();
-            var name = "fakeCustomer";
-
+            var firstName = "fakeCustomer";
+            var lastName = "fakeCustomerFamily";
+            var email = "a@a.com";
+            var phoneNumber = "+989010596159";
+            var dateOfBirth = new DateTime(1985, 2, 1);
+            var bankAccountNumber = 123456;
             //Act
-            var fakeCustomerItem = new Customer(identity, name);
+            var customer = new Customer(identity, firstName, lastName, dateOfBirth, phoneNumber, email, bankAccountNumber);
 
             //Assert
-            Assert.IsNotNull(fakeCustomerItem);
+            Assert.IsNotNull(customer);
         }
 
         [Fact]
-        public void Create_buyer_item_success()
+        public void Create_CustomerInvalidPhone_ReturnFail()
         {
+            //Arrange
+            var identity = new Guid().ToString();
+            var firstName = "fakeCustomer";
+            var lastName = "fakeCustomerFamily";
+            var email = "a@a.com";
+            var phoneNumber = "111111";
+            var dateOfBirth = new DateTime(1985, 2, 1);
+            var bankAccountNumber = 123456;
+
+            //Act - Assert
+            Assert.ThrowsException<ArgumentException>(()=> new Customer(identity, firstName, lastName, dateOfBirth, phoneNumber, email, bankAccountNumber));
 
         }
 
