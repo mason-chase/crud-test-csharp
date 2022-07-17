@@ -1,4 +1,6 @@
-﻿using Domain;
+﻿using Application.Api.Commands;
+using Domain;
+using Mc2.CrudTest.Presentation.Server.Commands;
 using Mc2.CrudTest.Presentation.Server.Queries;
 using Mc2.CrudTest.Presentation.Server.Services.Abstract;
 using MediatR;
@@ -25,6 +27,7 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
             _customerService = customerService ?? throw new ArgumentNullException(nameof(customerService));
         }
 
+        [Route("{customerId:int}")]
         [HttpGet]
         [ProducesResponseType(typeof(Customer), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
@@ -52,6 +55,51 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
 
         }
 
+        [Route("create")]
+        [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> CreateUserAsync([FromBody] CreateUserCommand command, [FromHeader(Name = "x-requestid")] string requestId)
+        {
+            bool commandResult = false;
+
+            if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
+            {
+                var userCreate = new IdentifiedCommand<CreateUserCommand, bool>(command, guid);
+
+                commandResult = await _mediator.Send(userCreate);
+            }
+
+            if (!commandResult)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
+        [Route("delete")]
+        [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> DeleteUserAsync([FromBody] DeleteUserCommand command, [FromHeader(Name = "x-requestid")] string requestId)
+        {
+            bool commandResult = false;
+
+            if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
+            {
+                var userDelete = new IdentifiedCommand<DeleteUserCommand, bool>(command, guid);
+
+                commandResult = await _mediator.Send(userDelete);
+            }
+
+            if (!commandResult)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
 
 
     }

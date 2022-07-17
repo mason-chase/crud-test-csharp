@@ -1,10 +1,10 @@
 using MediatR;
 
-namespace Mc2.CrudTest.Presentation.Server.Domain.Events
+namespace Domain.Events
 {
-    public class CustomerCreatedEvent : INotification
+    public record CustomerDeletedEvent : IntegrationEvent, INotification
     {
-        public CustomerCreatedEvent(string identity)
+        public CustomerDeletedEvent(string identity)
         {
             Identity = identity;
         }

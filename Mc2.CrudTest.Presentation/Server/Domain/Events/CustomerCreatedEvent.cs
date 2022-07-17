@@ -1,18 +1,17 @@
+using Mc2.CrudTest.Presentation.Server.Domain.Events;
 using MediatR;
 
 namespace Domain.Events
 {
-    public class CustomerCreatedEvent : INotification
+    public record CustomerCreatedEvent : IntegrationEvent, INotification
     {
-        public CustomerCreatedEvent(string identity, string name, string email)
+
+        public CustomerCreatedEvent(Customer customer)
         {
-            Identity = identity;
-            Name = name;
-            Email = email;
+            Customer = customer;
         }
 
-        public string Identity { get; }
-        public string Name { get; }
-        public string Email { get; }
+        public Customer Customer { get; }
+
     }
 }
