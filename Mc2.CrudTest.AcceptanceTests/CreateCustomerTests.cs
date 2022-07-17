@@ -2,6 +2,7 @@ using Domain;
 using Domain.AggregatesModel.CustomerAggregate;
 using Domain.Seedwork;
 using Infrastructure;
+using Mc2.CrudTest.Presentation.Server.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -105,7 +106,11 @@ namespace Mc2.CrudTest.AcceptanceTests
 
 
             //Act - Assert
+            var service = new CustomerService(mockContext.Object);
+            service.AddCustomer(customer1);
 
+            mockSet.Verify(m => m.Add(It.IsAny<Blog>()), Times.Once());
+            mockContext.Verify(m => m.SaveChanges(), Times.Once());
 
             bool allUnique = list
                 .GroupBy(p => new { properties you want to check })

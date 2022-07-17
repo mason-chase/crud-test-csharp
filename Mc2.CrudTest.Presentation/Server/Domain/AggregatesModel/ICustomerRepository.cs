@@ -8,6 +8,8 @@ namespace Domain.AggregatesModel.CustomerAggregate
     {
         Customer Add(Customer customer);
         Customer Update(Customer customer);
+
+        void Delete(int id);
         Task<Customer> FindAsync(string customerIdentityGuid);
         Task<Customer> FindByIdAsync(string id);
     }

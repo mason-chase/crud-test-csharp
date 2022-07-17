@@ -41,7 +41,15 @@ public class CustomerRepository
                 .Entity;
     }
 
-    public async Task<Customer> FindAsync(string identity)
+        public void Delete(int id)
+        {
+
+            var cs= _context.Customers.Where(c => c.Id == id).FirstOrDefault();
+            _context.Customers.Remove(cs);
+
+        }
+
+        public async Task<Customer> FindAsync(string identity)
     {
         var customer = await _context.Customers
             .Where(b => b.IdentityGuid == identity)
