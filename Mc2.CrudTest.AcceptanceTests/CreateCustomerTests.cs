@@ -1,5 +1,10 @@
 using Domain;
+using Domain.AggregatesModel.CustomerAggregate;
+using Domain.Seedwork;
+using Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using Xunit;
 
@@ -43,7 +48,7 @@ namespace Mc2.CrudTest.AcceptanceTests
             Assert.ThrowsException<ArgumentException>(a);
 
         }
-        [TestMethod, ExpectedException(typeof(ArgumentException))]
+        [TestMethod]
         public void Create_CustomerBadBankAccount_ReturnFail()
         {
             //Arrange
@@ -53,7 +58,7 @@ namespace Mc2.CrudTest.AcceptanceTests
             var email = "a@a.com";
             var phoneNumber = "+3197010265373";
             var dateOfBirth = new DateTime(1985, 2, 1);
-            var bankAccountNumber = "6546468";
+            var bankAccountNumber = "757";
 
             //Act - Assert
             Assert.ThrowsException<ArgumentException>(() => new Customer(identity, firstName, lastName, dateOfBirth, phoneNumber, email, bankAccountNumber));
@@ -90,11 +95,22 @@ namespace Mc2.CrudTest.AcceptanceTests
             var dateOfBirth = new DateTime(1985, 2, 1);
             string bankAccountNumber = "0123-4567-8912-3456";
 
-            var customer2 = new Customer(identity, firstName, lastName, dateOfBirth, phoneNumber, "a@d.com",bankAccountNumber);
+            var customer1 = new Customer(identity, firstName, lastName, dateOfBirth, phoneNumber, "a@d.com", bankAccountNumber);
+            var customer2 = new Customer(identity, firstName, lastName, dateOfBirth, phoneNumber, "b@b.com",bankAccountNumber);
+
+            var mockSet = new Mock<DbSet<Customer>>();
+
+            var mockContext = new Mock<CustomerContext>();
+            mockContext.Setup(m => m.Customers).Returns(mockSet.Object);
+
 
             //Act - Assert
-            Assert.ThrowsException<Exception>(() => new Customer(identity, firstName, lastName, dateOfBirth, phoneNumber, email, bankAccountNumber));
 
+
+            bool allUnique = list
+                .GroupBy(p => new { properties you want to check })
+                .All(g => g.Count() == 1);
+            Assert.IsTrue(allUnique)
         }
 
         [TestMethod]
