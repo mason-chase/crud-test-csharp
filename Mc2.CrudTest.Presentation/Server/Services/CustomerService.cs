@@ -2,6 +2,7 @@
 using Domain.AggregatesModel.CustomerAggregate;
 using Domain.Seedwork;
 using Infrastructure;
+using Mc2.CrudTest.Presentation.Server.Services.Abstract;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,14 +11,13 @@ using System.Threading.Tasks;
 
 namespace Mc2.CrudTest.Presentation.Server.Services
 {
-    public class CustomerService
+    public class CustomerService:ICustomerService
     {
         private ICustomerRepository _repository;
 
         public CustomerService(ICustomerRepository repository)
         {
             _repository = repository;
-
         }
 
         public Customer AddCustomer(Customer model)

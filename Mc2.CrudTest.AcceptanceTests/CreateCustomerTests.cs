@@ -107,11 +107,7 @@ namespace Mc2.CrudTest.AcceptanceTests
 
             }.AsQueryable();
 
-            var mockSet = new Mock<DbSet<Customer>>();
-            mockSet.As<IQueryable<Customer>>().Setup(m => m.Provider).Returns(data.Provider);
-            mockSet.As<IQueryable<Customer>>().Setup(m => m.Expression).Returns(data.Expression);
-            mockSet.As<IQueryable<Customer>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mockSet.As<IQueryable<Customer>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
+            var mock = Mock<ICustomerService>();
 
 
             var _context = new Mock<CustomerContext>();

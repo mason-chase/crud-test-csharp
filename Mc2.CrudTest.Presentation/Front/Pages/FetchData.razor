@@ -6,7 +6,7 @@
 
 <p>This component demonstrates fetching data from the server.</p>
 
-@if (_forecasts == null)
+@if (_customers == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -15,20 +15,20 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>PhoneNumber</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (WeatherForecast forecast in _forecasts)
+            @foreach (CustomerViewModel customer in _customers)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC.ToString()</td>
-                    <td>@forecast.TemperatureF.ToString()</td>
-                    <td>@forecast.Summary</td>
+                    <td>@customer.FirstName</td>
+                    <td>@customer.LastName.ToString()</td>
+                    <td>@customer.Email.ToString()</td>
+                    <td>@customer.PhoneNumber</td>
                 </tr>
             }
         </tbody>
@@ -36,11 +36,11 @@ else
 }
 
 @code {
-    private WeatherForecast[] _forecasts;
+    private CustomerViewModel[] _customers;
 
     protected override async Task OnInitializedAsync()
     {
-        _forecasts = await _http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+        _customers = await _http.GetFromJsonAsync<CustomerViewModel[]>("Cusomers");
     }
 
 }
