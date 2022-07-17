@@ -19,7 +19,10 @@ namespace Infrastructure
     public const string DEFAULT_SCHEMA = "customer";
     public DbSet<Customer> Customers { get; set; }
 
+    public List<Customer> CustomersList { get; set; }
+
     private readonly IMediator _mediator;
+
     private IDbContextTransaction _currentTransaction;
 
     public CustomerContext(DbContextOptions<CustomerContext> options) : base(options) { }

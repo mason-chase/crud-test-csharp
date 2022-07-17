@@ -1,4 +1,6 @@
 ﻿using Domain;
+using Domain.AggregatesModel.CustomerAggregate;
+using Domain.Seedwork;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,42 +12,32 @@ namespace Mc2.CrudTest.Presentation.Server.Services
 {
     public class CustomerService
     {
-        private CustomerContext _context;
+        private ICustomerRepository _repository;
 
-        public CustomerService(CustomerContext context)
+        public CustomerService(ICustomerRepository repository)
         {
-            _context = context;
+            _repository = repository;
+
         }
 
-        public Customer AddCustomer(CustomerViewModel model)
+        public Customer AddCustomer(Customer model)
         {
-            var customer = _context.Customers.Add(new Customer(null, firstName, lastName, dateOfBirth, phoneNumber, email, bankAccountNumber ));
-            _context.SaveChanges();
-
-            return customer.Entity;
+            return _repository.Add(model);
         }
 
         public List<Customer> GetAllCustomers()
         {
-            var query = from b in _context.Customers
+            var query = from b in _repository.GetAll()
                         orderby b.Lastname
                         select b;
 
             return query.ToList();
         }
 
-        public async Task<List<Customer>> GetAllCustomersAsync()
-        {
-            var query = from b in _context.Customers
-                        orderby b.Lastname
-                        select b;
 
-            return await query.ToListAsync();
-        }
-
-        public void DeleteCustomer(string id)
+        public void DeleteCustomer(int id)
         {
-            _context.Remove(id);
+            _repository.Delete(id);
         }
     }
 }

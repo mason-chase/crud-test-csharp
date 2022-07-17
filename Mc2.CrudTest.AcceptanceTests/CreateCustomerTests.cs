@@ -2,11 +2,14 @@ using Domain;
 using Domain.AggregatesModel.CustomerAggregate;
 using Domain.Seedwork;
 using Infrastructure;
+using Infrastructure.Repositories;
 using Mc2.CrudTest.Presentation.Server.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Mc2.CrudTest.AcceptanceTests
@@ -98,24 +101,37 @@ namespace Mc2.CrudTest.AcceptanceTests
 
             var customer1 = new Customer(identity, firstName, lastName, dateOfBirth, phoneNumber, "a@d.com", bankAccountNumber);
             var customer2 = new Customer(identity, firstName, lastName, dateOfBirth, phoneNumber, "b@b.com",bankAccountNumber);
+            var data = new List<Customer> {
+                new Customer(identity, firstName, lastName, dateOfBirth, phoneNumber, "a@d.com", bankAccountNumber),
+                new Customer(identity, firstName, lastName, dateOfBirth, phoneNumber, "b@b.com",bankAccountNumber)
+
+            }.AsQueryable();
 
             var mockSet = new Mock<DbSet<Customer>>();
+            mockSet.As<IQueryable<Customer>>().Setup(m => m.Provider).Returns(data.Provider);
+            mockSet.As<IQueryable<Customer>>().Setup(m => m.Expression).Returns(data.Expression);
+            mockSet.As<IQueryable<Customer>>().Setup(m => m.ElementType).Returns(data.ElementType);
+            mockSet.As<IQueryable<Customer>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
 
-            var mockContext = new Mock<CustomerContext>();
-            mockContext.Setup(m => m.Customers).Returns(mockSet.Object);
 
+            var _context = new Mock<CustomerContext>();
 
-            //Act - Assert
-            var service = new CustomerService(mockContext.Object);
-            service.AddCustomer(customer1);
+            //Set the context of mock object to  the data we created.
+            _context.Setup(c => c.Customers).Returns(mockSet.Object);
 
-            mockSet.Verify(m => m.Add(It.IsAny<Blog>()), Times.Once());
-            mockContext.Verify(m => m.SaveChanges(), Times.Once());
+            //Create instance of WorldRepository by injecting mock DbContext we created
+            var  _repo = new CustomerRepository(_context.Object);
 
-            bool allUnique = list
-                .GroupBy(p => new { properties you want to check })
+            _repo.Add(customer1);
+            _repo.Add(customer2);
+
+            var customers = _repo.GetAll();
+
+            bool allUnique = customers
+                .GroupBy(p => new { firstName, lastName, dateOfBirth})
                 .All(g => g.Count() == 1);
-            Assert.IsTrue(allUnique)
+
+            Assert.IsTrue(allUnique);
         }
 
         [TestMethod]
