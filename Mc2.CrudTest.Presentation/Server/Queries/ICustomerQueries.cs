@@ -9,7 +9,8 @@
     {
         Task<Customer> GetCustomerAsync(int id);
 
+        Task<IEnumerable<Customer>> GetAllCustomersAsync();
 
     }
 }
-}
+

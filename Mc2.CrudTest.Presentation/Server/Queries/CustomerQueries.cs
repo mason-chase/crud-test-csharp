@@ -34,7 +34,7 @@
             return MapCustomer(result);
         }
 
-        public async Task<IEnumerable<Customer>> GetAllCustomersAsync(int id)
+        public async Task<IEnumerable<Customer>> GetAllCustomersAsync()
         {
             using (var connection = new Microsoft.Data.SqlClient.SqlConnection(_connectionString))
             {

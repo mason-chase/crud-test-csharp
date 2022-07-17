@@ -3,13 +3,16 @@ using Domain.AggregatesModel.CustomerAggregate;
 using Domain.Seedwork;
 using Infrastructure;
 using Infrastructure.Repositories;
+using Mc2.CrudTest.Presentation.Server.Queries;
 using Mc2.CrudTest.Presentation.Server.Services;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Mc2.CrudTest.AcceptanceTests
@@ -17,6 +20,32 @@ namespace Mc2.CrudTest.AcceptanceTests
     [TestClass]
     public class BddTddTests
     {
+        private readonly Mock<IMediator> _mediatorMock;
+        private readonly Mock<ICustomerQueries> _customerQueriesMock;
+
+        public BddTddTests()
+        {
+            _mediatorMock = new Mock<IMediator>();
+            _customerQueriesMock = new Mock<ICustomerQueries>();
+        }
+
+        [Fact]
+        public async Task Get_customer_success()
+        {
+            //Arrange
+            var fakeCustomerId = 123;
+            var fakeDynamicResult = new Customer();
+            _customerQueriesMock.Setup(x => x.GetOrderAsync(It.IsAny<int>()))
+                .Returns(Task.FromResult(fakeDynamicResult));
+
+            //Act
+            var orderController = new OrdersController(_mediatorMock.Object, _orderQueriesMock.Object, _identityServiceMock.Object, _loggerMock.Object);
+            var actionResult = await orderController.GetOrderAsync(fakeOrderId) as OkObjectResult;
+
+            //Assert
+            Assert.Equal(actionResult.StatusCode, (int)System.Net.HttpStatusCode.OK);
+        }
+
         [TestMethod]
         public void CreateCustomerValid_ReturnsSuccess()
         {
