@@ -1,6 +1,9 @@
 using Domain;
+using Domain.AggregatesModel.CustomerAggregate;
 using Domain.Seedwork;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
@@ -41,7 +44,6 @@ public class CustomerRepository
     public async Task<Customer> FindAsync(string identity)
     {
         var customer = await _context.Customers
-            .Include(b => b.PaymentMethods)
             .Where(b => b.IdentityGuid == identity)
             .SingleOrDefaultAsync();
 
@@ -51,7 +53,6 @@ public class CustomerRepository
     public async Task<Customer> FindByIdAsync(string id)
     {
         var customer = await _context.Customers
-            .Include(b => b.PaymentMethods)
             .Where(b => b.Id == int.Parse(id))
             .SingleOrDefaultAsync();
 

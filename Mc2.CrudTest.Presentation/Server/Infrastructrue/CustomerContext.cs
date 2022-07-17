@@ -1,5 +1,7 @@
 using Domain;
 using Domain.Seedwork;
+using Infrastructrue;
+using Infrastructure.EntityConfigurations;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
