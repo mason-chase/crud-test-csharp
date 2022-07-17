@@ -5,9 +5,10 @@ using Xunit;
 
 namespace Mc2.CrudTest.AcceptanceTests
 {
+    [TestClass]
     public class BddTddTests
     {
-        [Fact]
+        [TestMethod]
         public void CreateCustomerValid_ReturnsSuccess()
         {
             //Arrange
@@ -17,7 +18,7 @@ namespace Mc2.CrudTest.AcceptanceTests
             var email = "a@a.com";
             var phoneNumber = "+989010596159";
             var dateOfBirth = new DateTime(1985, 2, 1);
-            var bankAccountNumber = 123456;
+            string bankAccountNumber = "0123-4567-8912-3456";
             //Act
             var customer = new Customer(identity, firstName, lastName, dateOfBirth, phoneNumber, email, bankAccountNumber);
 
@@ -25,7 +26,7 @@ namespace Mc2.CrudTest.AcceptanceTests
             Assert.IsNotNull(customer);
         }
 
-        [Fact]
+        [TestMethod]
         public void Create_CustomerInvalidPhone_ReturnFail()
         {
             //Arrange
@@ -35,12 +36,84 @@ namespace Mc2.CrudTest.AcceptanceTests
             var email = "a@a.com";
             var phoneNumber = "111111";
             var dateOfBirth = new DateTime(1985, 2, 1);
-            var bankAccountNumber = 123456;
+            string bankAccountNumber = "0123-4567-8912-3456"; ;
 
             //Act - Assert
-            Assert.ThrowsException<ArgumentException>(()=> new Customer(identity, firstName, lastName, dateOfBirth, phoneNumber, email, bankAccountNumber));
+            Action a = () => new Customer(identity, firstName, lastName, dateOfBirth, phoneNumber, email, bankAccountNumber);
+            Assert.ThrowsException<ArgumentException>(a);
 
         }
+        [Fact]
+        public void Create_CustomerBadBankAccount_ReturnFail()
+        {
+            //Arrange
+            var identity = new Guid().ToString();
+            var firstName = "fakeCustomer";
+            var lastName = "fakeCustomerFamily";
+            var email = "a@a.com";
+            var phoneNumber = "00989010596159";
+            var dateOfBirth = new DateTime(1985, 2, 1);
+            var bankAccountNumber = "6546468";
+
+            //Act - Assert
+            Assert.ThrowsException<ArgumentException>(() => new Customer(identity, firstName, lastName, dateOfBirth, phoneNumber, email, bankAccountNumber));
+
+        }
+
+        [TestMethod]
+        public void Create_CustomerBadEmail_ReturnFail()
+        {
+            //Arrange
+            var identity = new Guid().ToString();
+            var firstName = "fakeCustomer";
+            var lastName = "fakeCustomerFamily";
+            var email = "aa.com";
+            var phoneNumber = "00989010596159";
+            var dateOfBirth = new DateTime(1985, 2, 1);
+            string bankAccountNumber = "0123-4567-8912-3456";
+
+            //Act - Assert
+            Assert.ThrowsException<ArgumentException>(() => new Customer(identity, firstName, lastName, dateOfBirth, phoneNumber, email, bankAccountNumber));
+
+        }
+
+
+        [TestMethod]
+        public void Create_CustomerNotUnique_ReturnFail()
+        {
+            //Arrange
+            var identity = new Guid().ToString();
+            var firstName = "fakeCustomer";
+            var lastName = "fakeCustomerFamily";
+            var email = "a@a.com";
+            var phoneNumber = "00989010596159";
+            var dateOfBirth = new DateTime(1985, 2, 1);
+            string bankAccountNumber = "0123-4567-8912-3456";
+
+            var customer2 = new Customer(identity, firstName, lastName, dateOfBirth, phoneNumber, "a@d.com",bankAccountNumber);
+
+            //Act - Assert
+            Assert.ThrowsException<Exception>(() => new Customer(identity, firstName, lastName, dateOfBirth, phoneNumber, email, bankAccountNumber));
+
+        }
+
+        [TestMethod]
+        public void Create_CustomerEMailNotUnique_ReturnFail()
+        {
+            //Arrange
+            var identity = new Guid().ToString();
+            var firstName = "fakeCustomer";
+            var lastName = "fakeCustomerFamily";
+            var email = "a@a.com";
+            var phoneNumber = "00989010596159";
+            var dateOfBirth = new DateTime(1985, 2, 1);
+            string bankAccountNumber = "0123-4567-8912-3456";
+
+            //Act - Assert
+            Assert.ThrowsException<Exception>(() => new Customer(identity, firstName, lastName, dateOfBirth, phoneNumber, email, bankAccountNumber));
+
+        }
+
 
         // Please create more tests based on project requirements as per in readme.md
     }
