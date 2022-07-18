@@ -1,5 +1,12 @@
+using Domain.AggregatesModel.CustomerAggregate;
+using Domain.Events.EventLog;
+using Infrastructure;
+using Infrastructure.Repositories;
+using Mc2.CrudTest.Presentation.Server.Services;
+using Mc2.CrudTest.Presentation.Server.Services.Abstract;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,6 +29,17 @@ namespace Mc2.CrudTest.Presentation.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddDbContext<CustomerContext>(options =>
+                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<IntegrationEventLogContext>(options =>
+                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddSwaggerGen();
+
+            services.AddTransient<ICustomerRepository,CustomerRepository>();
+            services.AddScoped<ICustomerService,CustomerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +60,7 @@ namespace Mc2.CrudTest.Presentation.Server
             app.UseHttpsRedirection();
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
-
+            app.UseSwagger();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
