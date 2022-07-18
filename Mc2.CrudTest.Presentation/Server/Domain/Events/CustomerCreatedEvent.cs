@@ -1,4 +1,4 @@
-using Mc2.CrudTest.Presentation.Server.Domain.Events;
+
 using MediatR;
 
 namespace Domain.Events

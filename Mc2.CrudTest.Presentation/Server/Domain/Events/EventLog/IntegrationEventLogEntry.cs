@@ -13,7 +13,7 @@ namespace Domain.Event.EventLog
         private IntegrationEventLogEntry() { }
         public IntegrationEventLogEntry(IntegrationEvent @event, Guid transactionId)
         {
-            EventId = @event.;
+            EventId = @event.Id;
             CreationTime = @event.CreationDate;
             EventTypeName = @event.GetType().FullName;
             Content = JsonSerializer.Serialize(@event, @event.GetType(), new JsonSerializerOptions

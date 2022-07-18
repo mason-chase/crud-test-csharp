@@ -3,16 +3,16 @@ using System.Runtime.Serialization;
 
 namespace Application.Api.Commands
 {
-public class DeleteUserCommand : IRequest<bool>
+public class DeleteCustomerCommand : IRequest<bool>
     {
 
         [DataMember]
         public int Id { get; set; }
-        public DeleteUserCommand()
+        public DeleteCustomerCommand()
         {
 
         }
-        public DeleteUserCommand(int id)
+        public DeleteCustomerCommand(int id)
         {
             Id = id;
         }

@@ -16,7 +16,7 @@ namespace Mc2.CrudTest.Presentation.Server.Domain
         private readonly CustomerContext _customerContext;
         private readonly IIntegrationEventLogService _eventLogService;
 
-        public CustomerIntegrationEventService(IEventBus eventBus,
+        public CustomerIntegrationEventService(
             CustomerContext customerContext,
             IntegrationEventLogContext eventLogContext,
             Func<DbConnection, IIntegrationEventLogService> integrationEventLogServiceFactory

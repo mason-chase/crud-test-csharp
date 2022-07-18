@@ -1,4 +1,5 @@
 using Domain.AggregatesModel.CustomerAggregate;
+using Domain.Events.EventLog;
 using Infrastructure;
 using Infrastructure.Repositories;
 using Mc2.CrudTest.Presentation.Server.Services;
@@ -28,7 +29,11 @@ namespace Mc2.CrudTest.Presentation.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
             services.AddDbContext<CustomerContext>(options =>
+                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<IntegrationEventLogContext>(options =>
                      options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddSwaggerGen();

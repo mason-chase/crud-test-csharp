@@ -6,23 +6,19 @@ using System.Threading.Tasks;
 
 namespace Application.Api.Commands
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, bool>
+    public class DeleteCustomerCommandHandler : IRequestHandler<DeleteCustomerCommand, bool>
     {
         private readonly ICustomerRepository _customerRepository;
 
-        public CreateUserCommandHandler(ICustomerRepository customerRepository)
+        public DeleteCustomerCommandHandler(ICustomerRepository customerRepository)
         {
             _customerRepository = customerRepository;
         }
 
 
-        public async Task<bool> Handle(CreateUserCommand command, CancellationToken cancellationToken)
+        public async Task<bool> Handle(DeleteCustomerCommand command, CancellationToken cancellationToken)
         {
-            var customer = _customerRepository.Add(command.Customer);
-            if (customer == null)
-            {
-                return false;
-            }
+            _customerRepository.Delete(command.Id);
 
             return await _customerRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
         }

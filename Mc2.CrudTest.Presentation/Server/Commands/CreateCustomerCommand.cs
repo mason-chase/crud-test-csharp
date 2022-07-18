@@ -4,16 +4,16 @@ using System.Runtime.Serialization;
 
 namespace Application.Api.Commands
 {
-public class CreateUserCommand : IRequest<bool>
+    public class CreateCustomerCommand : IRequest<bool>
     {
 
         [DataMember]
         public Customer Customer;
-        public CreateUserCommand()
+        public CreateCustomerCommand()
         {
 
         }
-        public CreateUserCommand(Customer customer)
+        public CreateCustomerCommand(Customer customer)
         {
             Customer = customer;
         }

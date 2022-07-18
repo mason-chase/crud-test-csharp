@@ -1,0 +1,64 @@
+﻿@page "/create"
+@inject HttpClient _http
+@using Microsoft.Extensions.Logging
+@using System.Diagnostics
+
+<h1>Create a customer</h1>
+
+<h2>New Customer Entry Form</h2>
+
+<EditForm Model="@customer" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <p>
+        <label>
+            First Name:
+            <InputText @bind-Value="customer.FirstName" />
+        </label>
+    </p>
+    <p>
+        <label>
+            Last Name:
+            <InputText @bind-Value="customer.LastName" />
+        </label>
+    </p>
+
+    <p>
+        <label>
+            Email:
+            <InputText  @bind-Value="customer.Email" />
+        </label>
+    </p>
+     <p>
+        <label>
+            Date of Birth:
+            <InputDate  @bind-Value="customer.DateOfBirth" />
+        </label>
+    </p>
+    <p>
+        <label>
+            Phone Number:
+            <InputText @bind-Value="customer.PhoneNumber" />
+        </label>
+    </p>
+    <p>
+        <label>
+            Bank Account Number::
+            <InputText @bind-Value="customer.BankAccountNumber" />
+        </label>
+    </p>
+    <button type="submit">Submit</button>
+
+
+</EditForm>
+
+@code {
+    private CustomerViewModel customer = new();
+
+    private async Task HandleValidSubmit()
+    {
+        var res = await _http.PostAsJsonAsync("create",customer);
+        // Process the valid form
+    }
+}

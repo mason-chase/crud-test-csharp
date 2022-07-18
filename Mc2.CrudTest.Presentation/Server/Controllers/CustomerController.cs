@@ -13,18 +13,18 @@ using System.Threading.Tasks;
 
 namespace Mc2.CrudTest.Presentation.Server.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("[controller]")]
     public class CustomerController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly ICustomerService _customerService;
+        //private readonly ICustomerService _customerService;
         private readonly ICustomerQueries _customerQueries;
-        public CustomerController(ICustomerService customerService, IMediator mediator, ICustomerQueries customerQueries)
+        public CustomerController( IMediator mediator, ICustomerQueries customerQueries)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _customerQueries = customerQueries ?? throw new ArgumentNullException(nameof(customerQueries));
-            _customerService = customerService ?? throw new ArgumentNullException(nameof(customerService));
+          //  _customerService = customerService ?? throw new ArgumentNullException(nameof(customerService));
         }
 
         [Route("{customerId:int}")]
@@ -59,13 +59,13 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> CreateUserAsync([FromBody] CreateUserCommand command, [FromHeader(Name = "x-requestid")] string requestId)
+        public async Task<IActionResult> CreateUserAsync([FromBody] CreateCustomerCommand command, [FromHeader(Name = "x-requestid")] string requestId)
         {
             bool commandResult = false;
 
             if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
             {
-                var userCreate = new IdentifiedCommand<CreateUserCommand, bool>(command, guid);
+                var userCreate = new IdentifiedCommand<CreateCustomerCommand, bool>(command, guid);
 
                 commandResult = await _mediator.Send(userCreate);
             }
@@ -82,13 +82,13 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> DeleteUserAsync([FromBody] DeleteUserCommand command, [FromHeader(Name = "x-requestid")] string requestId)
+        public async Task<IActionResult> DeleteCustomerAsync([FromBody] DeleteCustomerCommand command, [FromHeader(Name = "x-requestid")] string requestId)
         {
             bool commandResult = false;
 
             if (Guid.TryParse(requestId, out Guid guid) && guid != Guid.Empty)
             {
-                var userDelete = new IdentifiedCommand<DeleteUserCommand, bool>(command, guid);
+                var userDelete = new IdentifiedCommand<DeleteCustomerCommand, bool>(command, guid);
 
                 commandResult = await _mediator.Send(userDelete);
             }
